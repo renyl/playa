@@ -1,3 +1,58 @@
   - javascript controlled
   - instantiate and control multiple independent players on the same page with just html
   - single instance flash app that streams mp3s
+
+  1. embed the swf
+
+    <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+            id="Playa" width="0" height="0"
+            codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab">
+        <param name="movie" value="Playa.swf" />
+        <param name="allowScriptAccess" value="sameDomain" />
+        <embed src="script/Playa.swf" quality="high" bgcolor="#869ca7"
+          width="0" height="0" name="Playa" 
+          play="true" loop="false" quality="high" allowScriptAccess="sameDomain"
+          type="application/x-shockwave-flash"
+          pluginspage="http://www.macromedia.com/go/getflashplayer">
+        </embed>
+    </object>
+
+  
+  2. set up a player using either a list of songs as follows:
+    
+    <ul class="playa" id="first_instance">
+      <li class="play">play</li>
+      <li class="pause">pause</li>
+      <li class="stop">stop</li>
+      <li class="previous">previous</li>
+      <li class="next">next</li>
+      <li>
+        <ul class="playlist">
+          <li>
+            <a class="song" href="resources/01.mp3">song 1</a>
+          </li>
+          <li>
+            <a class="song" href="resources/02.mp3">song 2</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+  - or using json
+
+    <ul class="playa" id="second_instance">
+      <li class="play">play</li>
+      <li class="pause">pause</li>
+      <li class="stop">stop</li>
+      <li class="previous">previous</li>
+      <li class="next">next</li>
+      <input type="hidden"
+             class="playlist"
+             value="['resources/06.mp3',
+                     {url: 'resources/07.mp3'}]"
+       />
+    </ul>
+
+  the elements and heirarchy do not matter.
+  the name of the classes is the only thing that matters.
+
