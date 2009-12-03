@@ -2,7 +2,13 @@
   - instantiate and control multiple independent players on the same page with just html
   - single instance flash app that streams mp3s
 
-  1. embed the swf
+  1. require the necessary js files (including jquery)
+
+    <script type="text/javascript" src="javascript/jquery-1.3.2.min.js" /> </script>
+    <script type="text/javascript" src="javascript/flash_interface.js" /></script>
+    <script type="text/javascript" src="javascript/playa.js" /></script>
+
+  2. embed the swf
 
     <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
             id="Playa" width="0" height="0"
@@ -18,7 +24,7 @@
     </object>
 
   
-  2. set up a player using either a list of songs as follows:
+  3. set up a player using a list of songs in html
     
     <ul class="playa" id="first_instance">
       <li class="play">play</li>
@@ -54,5 +60,5 @@
     </ul>
 
   the elements and heirarchy do not matter.
-  the name of the classes is the only thing that matters.
+  the class name is the only thing that matters.
 
