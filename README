@@ -2,6 +2,39 @@
   - instantiate and control multiple independent players on the same page with just html
   - single instance flash app that streams mp3s
 
+  ----------------
+  current behavior
+  ----------------
+
+  - a playa has access to these actions:
+      - play
+      - pause
+      - next
+      - previous
+      - stop
+
+  Play behavior
+  -------------
+  pushing play in one playa starts playing whatever the current track in that player.
+
+  pushing play in another player after a player has started pauses the current player (retaining playhead)
+  the new player will start playing at whatever track and playhead it has stored (track 1 time 0 by default, of course)
+  pushing play in the original player pauses the now current player (retaining playhead) and resumes play at the held place of the original player
+
+
+  advancing the track
+  -------------------
+  pushing "next" or "previous" while playing will play the "next" or "previous" track
+
+  if currently on the first or last track and playing, and "next" or "previous" takes it back to itself, play will stop
+    (this is the same behavior as itunes. blame them.)
+
+  if another playa is playing, pushing "next" or "previous" advances the playlist to the appropriate place, but does not alter current play.
+    if that playa is later played, the updated playhead will be used.
+
+
+  using Playa
+  -----------
   1. require the necessary js files (including jquery)
 
     <script type="text/javascript" src="javascript/jquery-1.3.2.min.js" /> </script>
