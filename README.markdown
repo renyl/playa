@@ -84,8 +84,8 @@ the updated playhead will be used.
 3. set up a player using predefined classes
 
 Giving an element the class "playa" will cause a number of hooks to be
-added to the subsequent elements. Elements classed as +play+, +pause+, 
-+stop+, +previous+, +next+, +playlist+, +display+, and +track+ are used
+added to the subsequent elements. Elements classed as `play`, `pause`, 
+`stop`, `previous`, `next`, `playlist`, `display`, and `track` are used
 by Playa. 
 
 you can make your playlist in html
@@ -123,8 +123,8 @@ or by putting json in the 'value' attribute of the class="playlist" element
        />
     </ul>
 
-Only the +url+ attribute is used if an object literal is passed in the
-value array. If you would like to use some other attribute (+image+, perhaps),
+Only the `url` attribute is used if an object literal is passed in the
+value array. If you would like to use some other attribute (`image`, perhaps),
 you are more than welcome.
 
 ### defining playlists with html
