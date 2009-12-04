@@ -66,9 +66,10 @@ var Playa =
             if(!url)
               url = this.currentTrackUrl();
 
-            if(this.playing == false)
+            if(this.playing == false){
               this.setCurrentTrack()
               this.app.play(this.name, url, this.playHead);
+            }
           },
           pause: function(){ this.app.pause(this.name); },
           stop: function(){ this.app.stop(this.name); },

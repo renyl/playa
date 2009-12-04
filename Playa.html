@@ -11,23 +11,23 @@
         width:200px;
         border:1px solid black;
       }
-
+ 
       .playa a{
         color: #000;
         text-decoration:none;
       }
-
+ 
       .playa .play { cursor:pointer; }
       .playa .stop { cursor:pointer; }
       .playa .pause { cursor:pointer; }
       .playa .next { cursor:pointer; }
       .playa .previous { cursor:pointer; }
-
+ 
       .playa .playlist {
         margin:0 30px;
         text-align:left;
       }
-
+ 
       .playa .active.track {
         background:#666;
         color:white;
@@ -39,7 +39,7 @@
       ul{
         list-style-type: none;
         margin:0; padding:0;
-      } 
+      }
     </style>
   </head>
   <body>
@@ -49,13 +49,13 @@
         <param name="movie" value="Playa.swf" />
         <param name="allowScriptAccess" value="sameDomain" />
         <embed src="Playa.swf" quality="high" bgcolor="#869ca7"
-          width="0" height="0" name="Playa" 
+          width="0" height="0" name="Playa"
           play="true" loop="false" quality="high" allowScriptAccess="sameDomain"
           type="application/x-shockwave-flash"
           pluginspage="http://www.macromedia.com/go/getflashplayer">
         </embed>
     </object>
-
+ 
     <div class="playa" id="first_instance">
       <ul>
         <li>
@@ -74,7 +74,7 @@
         </li>
       </ul>
     </div>
-
+ 
     <div class="playa" id="second_instance">
       <ul>
         <li>
@@ -97,7 +97,7 @@
       </ul>
     </div>
     </ul>
-
+ 
     <div class="playa" id="third_instance">
       <ul>
         <li>
@@ -110,7 +110,7 @@
       <input type="hidden"
              class="playlist"
              value="['resources/06.mp3',
-                     {url: 'resources/07.mp3'}]"
+{url: 'resources/07.mp3'}]"
        />
     </div>
   </body>
