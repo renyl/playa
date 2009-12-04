@@ -146,8 +146,22 @@ e.g.
       </li>
     </ul>
 
-the "active" attribute is put alongside the "track" attribute when a
+the `active` attribute is put alongside the `track` attribute when a
 song becomes active in a particular playa.
+
+e.g.
+
+    <li class="track active">
+      <a href="resources/01.mp3">song 1</a>
+      <img src="resources/01.jpg" />
+    </li>
+
+or
+
+    <li>
+      <a class="track active" href="resources/01.mp3">song 1</a>
+      <img src="resources/01.jpg" />
+    </li>
 
 
 # Callbacks
