@@ -62,24 +62,24 @@ the updated playhead will be used.
 
 1. require the necessary js files (including jquery)
 
-  <script type="text/javascript" src="javascript/jquery-1.3.2.min.js" /> </script>
-  <script type="text/javascript" src="javascript/flash_interface.js" /></script>
-  <script type="text/javascript" src="javascript/playa.js" /></script>
+    <script type="text/javascript" src="javascript/jquery-1.3.2.min.js" /> </script>
+    <script type="text/javascript" src="javascript/flash_interface.js" /></script>
+    <script type="text/javascript" src="javascript/playa.js" /></script>
 
 2. embed the swf
 
-  <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
-          id="Playa" width="0" height="0"
-          codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab">
-      <param name="movie" value="Playa.swf" />
-      <param name="allowScriptAccess" value="sameDomain" />
-      <embed src="script/Playa.swf" quality="high" bgcolor="#869ca7"
-        width="0" height="0" name="Playa" 
-        play="true" loop="false" quality="high" allowScriptAccess="sameDomain"
-        type="application/x-shockwave-flash"
-        pluginspage="http://www.macromedia.com/go/getflashplayer">
-      </embed>
-  </object>
+    <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+            id="Playa" width="0" height="0"
+            codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab">
+        <param name="movie" value="Playa.swf" />
+        <param name="allowScriptAccess" value="sameDomain" />
+        <embed src="script/Playa.swf" quality="high" bgcolor="#869ca7"
+          width="0" height="0" name="Playa" 
+          play="true" loop="false" quality="high" allowScriptAccess="sameDomain"
+          type="application/x-shockwave-flash"
+          pluginspage="http://www.macromedia.com/go/getflashplayer">
+        </embed>
+    </object>
 
 
 3. set up a player using predefined classes
@@ -91,23 +91,23 @@ by Playa.
 
 you can make your playlist in html
   
-  <ul class="playa" id="first_instance">
-    <li class="play">play</li>
-    <li class="pause">pause</li>
-    <li class="stop">stop</li>
-    <li class="previous">previous</li>
-    <li class="next">next</li>
-    <li>
-      <ul class="playlist">
-        <li>
-          <a class="track" href="resources/01.mp3">song 1</a>
-        </li>
-        <li>
-          <a class="track" href="resources/02.mp3">song 2</a>
-        </li>
-      </ul>
-    </li>
-  </ul>
+    <ul class="playa" id="first_instance">
+      <li class="play">play</li>
+      <li class="pause">pause</li>
+      <li class="stop">stop</li>
+      <li class="previous">previous</li>
+      <li class="next">next</li>
+      <li>
+        <ul class="playlist">
+          <li>
+            <a class="track" href="resources/01.mp3">song 1</a>
+          </li>
+          <li>
+            <a class="track" href="resources/02.mp3">song 2</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
 
 or by putting json in the 'value' attribute of the class="playlist" element
 
@@ -134,17 +134,17 @@ the 'track' designator can be on any element, but if it does not
 have a href attribute (as above), then it requires an anchor tag
 as one of its children
 
-    e.g.
-        <ul class="playlist">
-          <li class="track">
-            <a href="resources/01.mp3">song 1</a>
-            <img src="resources/01.jpg" />
-          </li>
-          <li class="track">
-            <a href="resources/02.mp3">song 2</a>
-            <img src="resources/02.jpg" />
-          </li>
-        </ul>
+e.g.
+      <ul class="playlist">
+        <li class="track">
+          <a href="resources/01.mp3">song 1</a>
+          <img src="resources/01.jpg" />
+        </li>
+        <li class="track">
+          <a href="resources/02.mp3">song 2</a>
+          <img src="resources/02.jpg" />
+        </li>
+      </ul>
 
 the "active" attribute is put alongside the "track" attribute when a
 song becomes active in a particular playa.
