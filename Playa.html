@@ -5,7 +5,41 @@
     <script type="text/javascript" src="javascript/flash_interface.js" /></script>
     <script type="text/javascript" src="javascript/playa.js" /></script>
     <style type="text/css">
-      .playa { border:1px solid black; }
+      .playa {
+        margin-bottom:20px;
+        text-align:center;
+        width:200px;
+        border:1px solid black;
+      }
+
+      .playa a{
+        color: #000;
+        text-decoration:none;
+      }
+
+      .playa .play { cursor:pointer; }
+      .playa .stop { cursor:pointer; }
+      .playa .pause { cursor:pointer; }
+      .playa .next { cursor:pointer; }
+      .playa .previous { cursor:pointer; }
+
+      .playa .playlist {
+        margin:0 30px;
+        text-align:left;
+      }
+
+      .playa .active.track {
+        background:#666;
+        color:white;
+      }
+      .playa .active.track a{
+        color:white;
+      }
+      
+      ul{
+        list-style-type: none;
+        margin:0; padding:0;
+      } 
     </style>
   </head>
   <body>
@@ -22,56 +56,62 @@
         </embed>
     </object>
 
-    <ul class="playa" id="first_instance">
-      <li class="play">play</li>
-      <li class="pause">pause</li>
-      <li class="stop">stop</li>
-      <li class="previous">previous</li>
-      <li class="next">next</li>
-      <li>
-        <ul class="playlist">
-          <li>
-            <a class="song" href="resources/01.mp3">song 1</a>
-          </li>
-          <li>
-            <a class="song" href="resources/02.mp3">song 2</a>
-          </li>
-        </ul>
-      </li>
+    <div class="playa" id="first_instance">
+      <ul>
+        <li>
+          <span class="play">play</span> | <span class="pause">pause</span> | <span class="stop">stop</span>
+        </li>
+        <li>
+          <span class="previous">&lt;- previous</span> | <span class="next">next -&gt;</span>
+        </li>
+      </ul>
+      <ul class="playlist">
+        <li class="track">
+          <a href="resources/01.mp3">song 1</a>
+        </li>
+        <li class="track">
+          <a href="resources/02.mp3">song 2</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="playa" id="second_instance">
+      <ul>
+        <li>
+          <span class="play">play</span> | <span class="pause">pause</span> | <span class="stop">stop</span>
+        </li>
+        <li>
+          <span class="previous">&lt;- previous</span> | <span class="next">next -&gt;</span>
+        </li>
+      </ul>
+      <ul class="playlist">
+        <li>
+          <a class="track" href="resources/03.mp3">song 3</a>
+        </li>
+        <li>
+          <a class="track" href="resources/04.mp3">song 4</a>
+        </li>
+        <li>
+          <a class="track" href="resources/05.mp3">song 5</a>
+        </li>
+      </ul>
+    </div>
     </ul>
 
-    <ul class="playa" id="second_instance">
-      <li class="play">play</li>
-      <li class="pause">pause</li>
-      <li class="stop">stop</li>
-      <li class="previous">previous</li>
-      <li class="next">next</li>
-      <li>
-        <ul class="playlist">
-          <li>
-            <a class="song" href="resources/03.mp3">song 3</a>
-          </li>
-          <li>
-            <a class="song" href="resources/04.mp3">song 4</a>
-          </li>
-          <li>
-            <a class="song" href="resources/05.mp3">song 5</a>
-          </li>
-        </ul>
-      </li>
-    </ul>
-
-    <ul class="playa" id="third_instance">
-      <li class="play">play</li>
-      <li class="pause">pause</li>
-      <li class="stop">stop</li>
-      <li class="previous">previous</li>
-      <li class="next">next</li>
+    <div class="playa" id="third_instance">
+      <ul>
+        <li>
+          <span class="play">play</span> | <span class="pause">pause</span> | <span class="stop">stop</span>
+        </li>
+        <li>
+          <span class="previous">&lt;- previous</span> | <span class="next">next -&gt;</span>
+        </li>
+      </ul>
       <input type="hidden"
              class="playlist"
              value="['resources/06.mp3',
                      {url: 'resources/07.mp3'}]"
        />
-    </ul>
+    </div>
   </body>
 </html>

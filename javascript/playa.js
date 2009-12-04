@@ -12,11 +12,25 @@ var Playa =
           id3Info: {},
           setPlayState: function(state){ this.playing = state; },
           setPlayHead: function(time){ this.playHead = time; },
+          setCurrentTrack: function(track){
+            if(!track)
+              track = this.currentTrack;
+
+            var playa = this;
+            this.currentTrack = track;
+            $("#"+this.name +" .track").each(function(i){
+              if(i == playa.currentTrack){
+                $(this).addClass("active");
+              }else{
+                $(this).removeClass("active");
+              }
+            })
+          },
           gotoNext: function(){
             this.setPlayHead(0)
 
             if(this.currentTrack != this.totalTracks-1)
-              this.currentTrack += 1;
+              this.setCurrentTrack(this.currentTrack += 1);
 
             return(this.currentTrack);
           },
@@ -24,7 +38,7 @@ var Playa =
             this.setPlayHead(0)
 
             if(this.currentTrack != 0)
-              this.currentTrack -= 1;
+              this.setCurrentTrack(this.currentTrack -= 1);
 
             return(this.currentTrack);
           },
@@ -53,6 +67,7 @@ var Playa =
               url = this.currentTrackUrl();
 
             if(this.playing == false)
+              this.setCurrentTrack()
               this.app.play(this.name, url, this.playHead);
           },
           pause: function(){ this.app.pause(this.name); },
@@ -69,7 +84,7 @@ var Playa =
       instance = Playa.init(name);
       instance.playlist = playlist;
       instance.totalTracks = Playa.countTracks(playlist);
-      instance.currentTrack = 0;
+      instance.setCurrentTrack(0);
       instance['app'] = FlashInterface.get('Playa');
       Playa.add(name, instance);
 
@@ -90,17 +105,26 @@ $(document).ready(function(){
         playa = Playa.setup(element.id, this.value);
       }else{
         var playlist = []
-        $(this).find(".song").each(function(i){
-          playlist.push(this.href);
+        $(this).find(".track").each(function(i){
+          var href 
+          if(!this.href){
+            $(this).find("a").each(function(i){
+              if(i==0)
+                href = this.href
+            });
+          }else{
+            href = this.href;
+          }
+          playlist.push(href)
         });
         playa = Playa.setup(element.id, playlist);
-        $(this).find(".song").each(function(i){
-          $(this).bind("click", function(e){
-            playa.stop();
-            playa.currentTrack = i;
-            playa.play(this.href);
-            return(false);
-          });
+          $(this).find(".track").each(function(i){
+            $(this).bind("click", function(e){
+              playa.stop();
+              playa.currentTrack = i;
+              playa.play(this.href);
+              e.preventDefault()
+            });
         });
       }
     });
