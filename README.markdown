@@ -63,26 +63,24 @@ the updated playhead will be used.
 
 1. require the necessary js files (including jquery)
 
-      <script type="text/javascript" src="javascript/jquery-1.3.2.min.js" /></script>
-      <script type="text/javascript" src="javascript/flash_interface.js" /></script>
-      <script type="text/javascript" src="javascript/playa.js" /></script>
+      <a script type="text/javascript" src="javascript/jquery-1.3.2.min.js" /></script>
+      <a script type="text/javascript" src="javascript/flash_interface.js" /></script>
+      <a script type="text/javascript" src="javascript/playa.js" /></script>
 
 2. embed the swf
 
-<code>
-<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
-      id="Playa" width="0" height="0"
-      codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab">
-  <param name="movie" value="Playa.swf" />
-  <param name="allowScriptAccess" value="sameDomain" />
-  <embed src="script/Playa.swf" quality="high" bgcolor="#869ca7"
-    width="0" height="0" name="Playa" 
-    play="true" loop="false" quality="high" allowScriptAccess="sameDomain"
-    type="application/x-shockwave-flash"
-    pluginspage="http://www.macromedia.com/go/getflashplayer">
-  </embed>
-</object>
-</code>
+      <a object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+            id="Playa" width="0" height="0"
+            codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab">
+        <param name="movie" value="Playa.swf" />
+        <param name="allowScriptAccess" value="sameDomain" />
+        <embed src="script/Playa.swf" quality="high" bgcolor="#869ca7"
+          width="0" height="0" name="Playa" 
+          play="true" loop="false" quality="high" allowScriptAccess="sameDomain"
+          type="application/x-shockwave-flash"
+          pluginspage="http://www.macromedia.com/go/getflashplayer">
+        </embed>
+      </object>
 
 
 3. set up a player using predefined classes
