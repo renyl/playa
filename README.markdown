@@ -61,7 +61,7 @@ the updated playhead will be used.
 
 ## Using Playa
 
-1. require the necessary js files (including jquery)
+### require the necessary js files (including jquery)
 
 
       <script type="text/javascript" src="javascript/jquery-1.3.2.min.js" /></script>
@@ -69,7 +69,7 @@ the updated playhead will be used.
       <script type="text/javascript" src="javascript/playa.js" /></script>
 
 
-2. embed the swf
+### embed the swf
 
 
 
@@ -87,7 +87,7 @@ the updated playhead will be used.
       </object>
 
 
-3. set up a player using predefined classes
+### set up a player using predefined classes
 
 Giving an element the class "playa" will cause a number of hooks to be
 added to the subsequent elements. Elements classed as `play`, `pause`, 
