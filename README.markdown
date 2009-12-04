@@ -63,13 +63,17 @@ the updated playhead will be used.
 
 1. require the necessary js files (including jquery)
 
-      <a script type="text/javascript" src="javascript/jquery-1.3.2.min.js" /></script>
-      <a script type="text/javascript" src="javascript/flash_interface.js" /></script>
-      <a script type="text/javascript" src="javascript/playa.js" /></script>
+
+      <script type="text/javascript" src="javascript/jquery-1.3.2.min.js" /></script>
+      <script type="text/javascript" src="javascript/flash_interface.js" /></script>
+      <script type="text/javascript" src="javascript/playa.js" /></script>
+
 
 2. embed the swf
 
-      <a object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+
+
+      <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
             id="Playa" width="0" height="0"
             codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab">
         <param name="movie" value="Playa.swf" />
