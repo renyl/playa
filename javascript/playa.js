@@ -102,9 +102,7 @@ $(document).ready(function(){
     var element = this;
     var playa; 
     $(this).find(".playlist").each(function(){
-      if(this == "[object HTMLInputElement]"){
-        playa = Playa.setup(element.id, this.value);
-      }else{
+      if(!this.value){
         var playlist = []
         $(this).find(".track").each(function(i){
           var href 
@@ -127,6 +125,8 @@ $(document).ready(function(){
               e.preventDefault()
             });
         });
+      }else{
+        playa = Playa.setup(element.id, this.value);
       }
     });
     $(this).find(".play").each(function(){

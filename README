@@ -114,7 +114,7 @@
     the "active" attribute is put alongside the "track" attribute when a
     song becomes active in a particular playa.
 
-  - or by using json
+  - or by putting json in the 'value' attribute of the class="playlist" element
 
     <ul class="playa" id="second_instance">
       <li class="play">play</li>
@@ -128,10 +128,6 @@
                      {url: 'resources/07.mp3'}]"
        />
     </ul>
-
-  tracks
-
-
 
   the elements and heirarchy do not matter.
   the class name is the only thing that matters.
