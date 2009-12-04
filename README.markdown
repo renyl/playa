@@ -146,8 +146,12 @@ e.g.
       </li>
     </ul>
 
+
+### marking the active track
+
 the `active` attribute is put alongside the `track` attribute when a
-song becomes active in a particular playa.
+song becomes active in a particular Playa. Activity is triggered when
+a song becomes the current track for a Playa.
 
 e.g.
 
