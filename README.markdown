@@ -69,6 +69,7 @@ the updated playhead will be used.
 
 2. embed the swf
 
+      <pre>
       <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
             id="Playa" width="0" height="0"
             codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab">
@@ -81,6 +82,7 @@ the updated playhead will be used.
           pluginspage="http://www.macromedia.com/go/getflashplayer">
         </embed>
       </object>
+      </pre>
 
 
 3. set up a player using predefined classes
@@ -136,16 +138,16 @@ have a href attribute (as above), then it requires an anchor tag
 as one of its children
 
 e.g.
-      <ul class="playlist">
-        <li class="track">
-          <a href="resources/01.mp3">song 1</a>
-          <img src="resources/01.jpg" />
-        </li>
-        <li class="track">
-          <a href="resources/02.mp3">song 2</a>
-          <img src="resources/02.jpg" />
-        </li>
-      </ul>
+    <ul class="playlist">
+      <li class="track">
+        <a href="resources/01.mp3">song 1</a>
+        <img src="resources/01.jpg" />
+      </li>
+      <li class="track">
+        <a href="resources/02.mp3">song 2</a>
+        <img src="resources/02.jpg" />
+      </li>
+    </ul>
 
 the "active" attribute is put alongside the "track" attribute when a
 song becomes active in a particular playa.
