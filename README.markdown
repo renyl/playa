@@ -18,7 +18,8 @@ go into a hosted directory (e.g. ~/Sites on a mac)
 
 and then direct your browser to the resulting folder
 
-or just go check out the result at http://newqdev.com/playa/Playa.html
+or just go check out what that is going to look like
+[here](http://newqdev.com/playa/Playa.html)
 
 # Current behavior
 
@@ -30,7 +31,7 @@ a playa has access to these actions:
 - previous
 - stop
 
-## Play behavior
+## Play, pause, and stop with multiple Playas
 
 pushing play in one playa starts playing whatever the current track
 in that player.
@@ -46,25 +47,25 @@ current player (retaining playhead) and resumes play at the held
 place of the original player
 
 
-## advancing the track
+## Advancing the track
 
-pushing "next" or "previous" while playing will play the "next" or "previous" track
+Pushing `next` or `previous` while playing will play the `next` or `previous` track
 
-if currently on the first or last track and playing, and "next" or "previous" takes
-it back to itself, play will stop. this is the same behavior as itunes. blame them.
+If currently on the first or last track and playing, and `next` or `previous` takes
+it back to itself, play will stop. This is the same behavior as itunes. Blame them.
 
-if another playa is playing, pushing "next" or "previous" advances the playlist to
-the appropriate place, but does not alter current play. if that playa is later played,
+If another playa is playing, pushing `next` or `previous` advances the playlist to
+the appropriate place, but does not alter current play. If that Playa is later played,
 the updated playhead will be used.
 
 
-## using Playa
+## Using Playa
 
 1. require the necessary js files (including jquery)
 
-    <script type="text/javascript" src="javascript/jquery-1.3.2.min.js" /> </script>
-    <script type="text/javascript" src="javascript/flash_interface.js" /></script>
-    <script type="text/javascript" src="javascript/playa.js" /></script>
+      <script type="text/javascript" src="javascript/jquery-1.3.2.min.js" /> </script>
+      <script type="text/javascript" src="javascript/flash_interface.js" /></script>
+      <script type="text/javascript" src="javascript/playa.js" /></script>
 
 2. embed the swf
 
@@ -128,7 +129,7 @@ Only the `url` attribute is used if an object literal is passed in the
 value array. If you would like to use some other attribute (`image`, perhaps),
 you are more than welcome.
 
-### defining playlists with html
+### Defining playlists with html
 
 the 'track' designator can be on any element, but if it does not
 have a href attribute (as above), then it requires an anchor tag
