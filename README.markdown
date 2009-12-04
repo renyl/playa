@@ -109,7 +109,7 @@ you can make your playlist in html
       </li>
     </ul>
 
-or by putting json in the 'value' attribute of the class="playlist" element
+or by putting json in the `value` attribute of the `class="playlist"` element
 
     <ul class="playa" id="second_instance">
       <li class="play">play</li>
