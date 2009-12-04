@@ -2,9 +2,7 @@
   - instantiate and control multiple independent players on the same page with just html
   - single instance flash app that streams mp3s
 
-  ----------
-  try it out
-  ----------
+  ## try it out
   
   go into a hosted directory (e.g. ~/Sites on a mac)
   
@@ -12,22 +10,22 @@
 
   and then direct your browser to the resulting folder
 
-      the result can be seen at http://newqdev.com/playa/Playa.html
+  or just go check out the result at http://newqdev.com/playa/Playa.html
 
-  ----------------
-  current behavior
-  ----------------
+  ## current behavior
 
-  - a playa has access to these actions:
-      - play
-      - pause
-      - next
-      - previous
-      - stop
+  a playa has access to these actions:
 
-  Play behavior
-  -------------
-  pushing play in one playa starts playing whatever the current track in that player.
+  - play
+  - pause
+  - next
+  - previous
+  - stop
+
+  ## Play behavior
+
+  pushing play in one playa starts playing whatever the current track
+  in that player.
 
   pushing play in another player after a player has started
   pauses the current player (retaining playhead)
@@ -36,11 +34,12 @@
   playhead it has stored (track 1 time 0 by default, of course)
 
   pushing play in the original player pauses the now
-  current player (retaining playhead) and resumes play at the held place of the original player
+  current player (retaining playhead) and resumes play at the held
+  place of the original player
 
 
-  advancing the track
-  -------------------
+  ## advancing the track
+
   pushing "next" or "previous" while playing will play the "next" or "previous" track
 
   if currently on the first or last track and playing, and "next" or "previous" takes
@@ -51,8 +50,8 @@
   the updated playhead will be used.
 
 
-  using Playa
-  -----------
+  ## using Playa
+
   1. require the necessary js files (including jquery)
 
     <script type="text/javascript" src="javascript/jquery-1.3.2.min.js" /> </script>
@@ -95,9 +94,9 @@
       </li>
     </ul>
 
-    the 'track' designator can be on any element, but if it does not
-    have a href attribute (as above), then it requires an anchor tag
-    as one of its children
+the 'track' designator can be on any element, but if it does not
+have a href attribute (as above), then it requires an anchor tag
+as one of its children
 
     e.g.
         <ul class="playlist">
@@ -111,10 +110,10 @@
           </li>
         </ul>
 
-    the "active" attribute is put alongside the "track" attribute when a
-    song becomes active in a particular playa.
+the "active" attribute is put alongside the "track" attribute when a
+song becomes active in a particular playa.
 
-  - or by putting json in the 'value' attribute of the class="playlist" element
+or by putting json in the 'value' attribute of the class="playlist" element
 
     <ul class="playa" id="second_instance">
       <li class="play">play</li>
@@ -129,6 +128,6 @@
        />
     </ul>
 
-  the elements and heirarchy do not matter.
-  the class name is the only thing that matters.
+the elements and heirarchy do not matter.
+the class name is the only thing that matters.
 
