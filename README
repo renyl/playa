@@ -74,16 +74,35 @@
       <li>
         <ul class="playlist">
           <li>
-            <a class="song" href="resources/01.mp3">song 1</a>
+            <a class="track" href="resources/01.mp3">song 1</a>
           </li>
           <li>
-            <a class="song" href="resources/02.mp3">song 2</a>
+            <a class="track" href="resources/02.mp3">song 2</a>
           </li>
         </ul>
       </li>
     </ul>
 
-  - or using json
+    the 'track' designator can be on any element, but if it does not
+    have a href attribute (as above), then it requires an anchor tag
+    as one of its children
+
+    e.g.
+        <ul class="playlist">
+          <li class="track">
+            <a href="resources/01.mp3">song 1</a>
+            <img src="resources/01.jpg" />
+          </li>
+          <li class="track">
+            <a href="resources/02.mp3">song 2</a>
+            <img src="resources/02.jpg" />
+          </li>
+        </ul>
+
+    the "active" attribute is put alongside the "track" attribute when a
+    song becomes active in a particular playa.
+
+  - or by using json
 
     <ul class="playa" id="second_instance">
       <li class="play">play</li>
@@ -97,6 +116,10 @@
                      {url: 'resources/07.mp3'}]"
        />
     </ul>
+
+  tracks
+
+
 
   the elements and heirarchy do not matter.
   the class name is the only thing that matters.
