@@ -1,4 +1,4 @@
-# What it is
+h1.What it is
 
 Playa is a javascript class that communicates with an media-streaming swf. 
 The script looks for Playas defined in the dom, and prepares a Playa instance
@@ -10,7 +10,7 @@ If you do not require any particular fanciness in the event callback department,
 is no need for you to write even a single byte of javascript. Dead simple, degrades
 gracefully, low overhead. Just the way a playa oughta roll.
 
-# Try it out
+h1.Try it out
 
 go into a hosted directory (e.g. ~/Sites on a mac)
 
@@ -21,7 +21,7 @@ and then direct your browser to the resulting folder
 or just go check out what that is going to look like
 [here](http://newqdev.com/playa/Playa.html)
 
-# Current behavior
+h1.Current behavior
 
 a playa has access to these actions:
 
@@ -31,7 +31,7 @@ a playa has access to these actions:
 - previous
 - stop
 
-## Play, pause, and stop with multiple Playas
+h2.Play, pause, and stop with multiple Playas
 
 pushing play in one playa starts playing whatever the current track
 in that player.
@@ -47,7 +47,7 @@ current player (retaining playhead) and resumes play at the held
 place of the original player
 
 
-## Advancing the track
+h2.Advancing the track
 
 Pushing `next` or `previous` while playing will play the `next` or `previous` track
 
@@ -59,7 +59,7 @@ the appropriate place, but does not alter current play. If that Playa is later p
 the updated playhead will be used.
 
 
-## Using Playa
+h2.Using Playa
 
 1. require the necessary js files (including jquery)
 
@@ -129,7 +129,7 @@ Only the `url` attribute is used if an object literal is passed in the
 value array. If you would like to use some other attribute (`image`, perhaps),
 you are more than welcome.
 
-### Defining playlists with html
+h2.Defining playlists with html
 
 the 'track' designator can be on any element, but if it does not
 have a href attribute (as above), then it requires an anchor tag
@@ -151,6 +151,6 @@ the "active" attribute is put alongside the "track" attribute when a
 song becomes active in a particular playa.
 
 
-# Callbacks
+h1.Callbacks
 
 There are currently none.
