@@ -2,6 +2,18 @@
   - instantiate and control multiple independent players on the same page with just html
   - single instance flash app that streams mp3s
 
+  ----------
+  try it out
+  ----------
+  
+  go into a hosted directory (e.g. ~/Sites on a mac)
+  
+      $ git clone git://github.com/whtevn/playa.git
+
+  and then direct your browser to the resulting folder
+
+      the result can be seen at http://newqdev.com/playa/Playa.html
+
   ----------------
   current behavior
   ----------------
@@ -124,4 +136,3 @@
   the elements and heirarchy do not matter.
   the class name is the only thing that matters.
 
-  example at http://newqdev.com/playa/Playa.html
