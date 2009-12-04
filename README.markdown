@@ -1,5 +1,4 @@
-What it is
-==========
+# What it is
 
 Playa is a javascript class that communicates with an media-streaming swf. No javascript
 is required to create a Playa instance. The script looks for Playas defined in the dom,
@@ -10,8 +9,7 @@ If you do not require any particular fanciness in the event callback department,
 is no need for you to write even a single byte of javascript. Dead simple, degrades
 gracefully, low overhead. Just the way a playa oughta roll.
 
-Try it out
-==========
+# Try it out
 
 go into a hosted directory (e.g. ~/Sites on a mac)
 
@@ -21,8 +19,7 @@ and then direct your browser to the resulting folder
 
 or just go check out the result at http://newqdev.com/playa/Playa.html
 
-Current behavior
-===============
+# Current behavior
 
 a playa has access to these actions:
 
@@ -32,8 +29,7 @@ a playa has access to these actions:
 - previous
 - stop
 
-Play behavior
-------------
+## Play behavior
 
 pushing play in one playa starts playing whatever the current track
 in that player.
@@ -49,8 +45,7 @@ current player (retaining playhead) and resumes play at the held
 place of the original player
 
 
-advancing the track
--------------------
+## advancing the track
 
 pushing "next" or "previous" while playing will play the "next" or "previous" track
 
@@ -62,8 +57,7 @@ the appropriate place, but does not alter current play. if that playa is later p
 the updated playhead will be used.
 
 
-using Playa
------------
+## using Playa
 
 1. require the necessary js files (including jquery)
 
@@ -155,7 +149,6 @@ the "active" attribute is put alongside the "track" attribute when a
 song becomes active in a particular playa.
 
 
-Callbacks
----------
+# Callbacks
 
 There are currently none.
