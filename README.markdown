@@ -68,7 +68,7 @@ the updated playhead will be used.
 
 2. embed the swf
 
-    <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+      <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
             id="Playa" width="0" height="0"
             codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab">
         <param name="movie" value="Playa.swf" />
@@ -79,7 +79,7 @@ the updated playhead will be used.
           type="application/x-shockwave-flash"
           pluginspage="http://www.macromedia.com/go/getflashplayer">
         </embed>
-    </object>
+      </object>
 
 
 3. set up a player using predefined classes
