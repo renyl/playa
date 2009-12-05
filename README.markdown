@@ -177,8 +177,8 @@ callbacks are available for the following events:
 - doOnStop
 - doOnPlayNext
 - doOnPlayPrevious
-- doWhilePlaying
 - doOnActivateTrack
+- doWhilePlaying
 
 callbacks are set in a jquery $(document).ready() function, and will
 look something like this:

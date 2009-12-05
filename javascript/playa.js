@@ -98,6 +98,13 @@ var Playa =
           },
           playIntervalId: '',
           playheadUpdater: function(){
+            /*
+             * setInterval re-scopes everything to window
+             * Playa only has a .current because of that
+             * it is very disspointing to me that these
+             * functions have to be called this way. 
+             * very dissapointing, indeed.
+             */
             Playa.current.updatePlayhead();
             Playa.current.doWhilePlaying();
           },
@@ -122,12 +129,6 @@ var Playa =
             clearInterval(this.playIntervalId);
           },
           updateDisplay: function(text){
-            // need a method that sets and uses a default display line
-            // something that would easily give a desirable output
-            // would be nice if the display element could be moved to 
-            // the active track
-
-            // which, of course, it can.
             $("#"+this.name +" .display").each(function(i){
               $(this).text(text);
             })
