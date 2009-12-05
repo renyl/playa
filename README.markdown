@@ -170,4 +170,34 @@ or
 
 # Callbacks
 
-There are currently none.
+callbacks are available for the following events:
+
+- doOnPlay
+- doOnPause
+- doOnStop
+- doOnPlayNext
+- doOnPlayPrevious
+- doWhilePlaying
+
+callbacks are set in a jquery $(document).ready() function, and will
+look something like this:
+
+    	$(document).ready(function(){
+
+        Playa.get["first_instance"]["doWhilePlaying"] = function(){
+          playheadDisplay = (this.playhead/1000).toFixed(0)+"/"+(this.trackTime/1000).toFixed(0);
+          this.updateDisplay(playheadDisplay);
+        };
+
+        Playa.get["first_instance"]["doOnStop"] = function(){
+          this.updateDisplay("0/"+(this.trackTime/1000).toFixed(0));
+        };
+      }); 
+
+where `first_instance` is the id of the playa you are addressing.
+
+currently, callbacks do nothing on default. I plan to concoct some sort of defaults,
+however, as long as I can convince myself they will be generally useful.
+
+Also, there is currently no easy way to set a particular callback for all players on
+the page, although this is also in the works.
