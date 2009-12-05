@@ -1,9 +1,10 @@
 # What it is
 
-Playa is a javascript class that communicates with an media-streaming swf. 
+Playa is a javascript class that communicates with a media-streaming swf. 
 The script looks for Playas defined in the dom, and prepares a Playa instance
-in javascript to control each playlist. No javascript is required to create a
-Playa instance.
+in javascript to control each playlist. No javascript is required by the user
+to create a simple Playa instance. Callbacks are available for Playa events,
+and of course you can use javascript to manage the page, just as you always can.
 
 No matter the number of Playas in the dom, there will only ever be one teeny-tiny swf.
 If you do not require any particular fanciness in the event callback department, there
