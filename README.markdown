@@ -183,15 +183,14 @@ callbacks are set in a jquery $(document).ready() function, and will
 look something like this:
 
     	$(document).ready(function(){
+          Playa.get["first_instance"]["doWhilePlaying"] = function(){
+            playheadDisplay = (this.playhead/1000).toFixed(0)+"/"+(this.trackTime/1000).toFixed(0);
+            this.updateDisplay(playheadDisplay);
+          };
 
-        Playa.get["first_instance"]["doWhilePlaying"] = function(){
-          playheadDisplay = (this.playhead/1000).toFixed(0)+"/"+(this.trackTime/1000).toFixed(0);
-          this.updateDisplay(playheadDisplay);
-        };
-
-        Playa.get["first_instance"]["doOnStop"] = function(){
-          this.updateDisplay("0/"+(this.trackTime/1000).toFixed(0));
-        };
+          Playa.get["first_instance"]["doOnStop"] = function(){
+            this.updateDisplay("0/"+(this.trackTime/1000).toFixed(0));
+          };
       }); 
 
 where `first_instance` is the id of the playa you are addressing.
