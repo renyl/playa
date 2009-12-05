@@ -1,30 +1,38 @@
 # What it is
 
 Playa is a javascript class that communicates with a media-streaming swf. 
-The script looks for Playas defined in the dom, and prepares a Playa instance
+The script looks for Playas defined in the dom and prepares a Playa instance
 in javascript to control each playlist. No javascript is required by the user
-to create a simple Playa instance. Callbacks are available for Playa events,
-and of course you can use javascript to manage the page, just as you always can.
+to create a working Playa. Callbacks are available for Playa events,
+and of course you can use javascript to manage the page just as you always can.
 
 No matter the number of Playas in the dom, there will only ever be one teeny-tiny swf.
 If you do not require any particular fanciness in the event callback department, there
 is no need for you to write even a single byte of javascript. Dead simple, degrades
-gracefully, low overhead. Just the way a playa oughta roll.
+gracefully, low overhead. Just the way a Playa oughta roll.
 
 # Try it out
 
 go into a hosted directory (e.g. ~/Sites on a mac)
 
-    $ git clone git://github.com/whtevn/playa.git
+    $ git clone git://github.com/whtevn/Playa.git
 
 and then direct your browser to the resulting folder
 
 or just go check out what that is going to look like
-[here](http://newqdev.com/playa/Playa.html)
+[here](http://newqdev.com/Playa/Playa.html)
+
+I am aware that the visuals on that example are not particularly impressive. 
+I am not aiming to prove that css works with html. It does. I promise.
+
+nicer examples to come when they come. or if one of you nice folk would
+like to make an example playa, I would be more than happy to display it here
+and attribute it to you in whatever way seems most fitting to your particular 
+sensibilities.
 
 # Current behavior
 
-a playa has access to these actions:
+a Playa has access to these actions:
 
 - play
 - pause
@@ -34,7 +42,7 @@ a playa has access to these actions:
 
 ## Play, pause, and stop with multiple Playas
 
-pushing play in one playa starts playing whatever the current track
+pushing play in one Playa starts playing whatever the current track
 in that player.
 
 pushing play in another player after a player has started
@@ -55,7 +63,7 @@ Pushing `next` or `previous` while playing will play the `next` or `previous` tr
 If currently on the first or last track and playing, and `next` or `previous` takes
 it back to itself, play will stop. This is the same behavior as itunes. Blame them.
 
-If another playa is playing, pushing `next` or `previous` advances the playlist to
+If another Playa is playing, pushing `next` or `previous` advances the playlist to
 the appropriate place, but does not alter current play. If that Playa is later played,
 the updated playhead will be used.
 
@@ -66,7 +74,7 @@ the updated playhead will be used.
 
     <script type="text/javascript" src="javascript/jquery-1.3.2.min.js" /></script>
     <script type="text/javascript" src="javascript/flash_interface.js" /></script>
-    <script type="text/javascript" src="javascript/playa.js" /></script>
+    <script type="text/javascript" src="javascript/Playa.js" /></script>
 
 ### embed the swf
 
@@ -85,14 +93,14 @@ the updated playhead will be used.
 
 ### set up a player using predefined classes
 
-Giving an element the class "playa" will cause a number of hooks to be
+Giving an element the class "Playa" will cause a number of hooks to be
 added to the subsequent elements. Elements classed as `play`, `pause`, 
 `stop`, `previous`, `next`, `playlist`, `display`, and `track` are used
 by Playa. 
 
 you can make your playlist in html
   
-    <ul class="playa" id="first_instance">
+    <ul class="Playa" id="first_instance">
       <li class="play">play</li>
       <li class="pause">pause</li>
       <li class="stop">stop</li>
@@ -112,7 +120,7 @@ you can make your playlist in html
 
 or by putting json in the `value` attribute of the `class="playlist"` element
 
-    <ul class="playa" id="second_instance">
+    <ul class="Playa" id="second_instance">
       <li class="play">play</li>
       <li class="pause">pause</li>
       <li class="stop">stop</li>
@@ -195,7 +203,7 @@ look something like this:
           };
       }); 
 
-where `first_instance` is the id of the playa you are addressing.
+where `first_instance` is the id of the Playa you are addressing.
 
 currently, callbacks do nothing on default. I plan to concoct some sort of defaults,
 however, as long as I can convince myself they will be generally useful.
