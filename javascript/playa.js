@@ -22,11 +22,13 @@ var Playa =
             var playa = this;
             this.currentTrack = track;
             $("#"+this.name +" .track").each(function(i){
-              if(i == playa.currentTrack){
+              var active_track = (i == playa.currentTrack)
+              if(active_track){
                 $(this).addClass("active");
               }else{
                 $(this).removeClass("active");
               }
+              this.doOnActivateTrack(this, active_track);
             })
           },
           gotoNext: function(){
@@ -106,6 +108,7 @@ var Playa =
           },
           doOnPlayNext: function(){},
           doOnPlayPrevious: function(){},
+          doOnActivateTrack: function(element, active){};
           doWhilePlaying: function(){
             var playheadDisplay = (this.playhead/1000)
             playheadDisplay = playheadDisplay.toFixed(0)

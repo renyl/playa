@@ -178,6 +178,7 @@ callbacks are available for the following events:
 - doOnPlayNext
 - doOnPlayPrevious
 - doWhilePlaying
+- doOnActivateTrack
 
 callbacks are set in a jquery $(document).ready() function, and will
 look something like this:
@@ -200,3 +201,34 @@ however, as long as I can convince myself they will be generally useful.
 
 Also, there is currently no easy way to set a particular callback for all players on
 the page, although this is also in the works.
+
+## a few special notes on callbacks
+
+although most of the callbacks are pretty straightforward, two of them bare a little
+explanation. `doWhilePlaying` and `doOnActivateTrack` are slightly different animals
+than the other ones.
+
+### doWhilePlaying
+
+`doWhilePlaying` runs continuously once play is started. If you want to establish 
+a playhead, or do something else repeatedly while a song is playing, this is where it would go. The interval span is 100ms. If this is unnacceptable to you, overwriting the
+`startDoingWhilePlaying` (which, unsurprisingly, starts the `doWhilePlaying` method)
+method to accommodate your needs would look exactly like writing any other callback.
+
+
+### doOnActivateTrack
+
+`doOnActivateTrack` fires for every element in a playlist on track change. This 
+callback uses two arguments. The first is the track element which is currently
+being discussed, and the second is a boolean value indicating whether the current
+element is or is not the active track. Writing a `doOnActivateTrack` callback would 
+look like this
+
+        Playa.get["first_instance"]["doOnActivateTrack"] = function(element, active){
+          if(active == true){
+            $(element).removeClass("hide")
+          }else{
+            $(element).addClass("hide")
+          }
+        };
+
