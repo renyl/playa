@@ -41,16 +41,6 @@
       
       #license{ font-size:10px; width:200px;}
     </style>
-    <script type="text/javascript">
-    	$(document).ready(function(){                                                      
-        Playa.get["first_instance"]["doWhilePlaying"] = function(){                      
-          this.updateDisplay((this.playhead/1000).toFixed(0)+"/"+(this.trackTime/1000).toFixed(0));                                    
-        };
-        Playa.get["first_instance"]["doOnStop"] = function(){                      
-          this.updateDisplay("0/"+(this.trackTime/1000).toFixed(0));                                    
-        }; 
-      }); 
-    </script>
   </head>
   <body>
     <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"

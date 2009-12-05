@@ -13,9 +13,6 @@ package {
 		private var currentTrackUrl:String;
 		private var currentPlayaName:String;
 		
-		
-		
-		
 		public function Playa() {			
 			if (ExternalInterface.available) {
 				try {
@@ -47,6 +44,9 @@ package {
 		}
 		
 		private function stopIfNewPlaya(playaName:String):void {
+			// this should really be called "stopIfNewPlaya",
+			// and it should call pause from the external interface
+			// so the doOnPause() callback will fire
 			try{
 			  if(playaName != currentPlayaName)
 				  pause(currentPlayaName, true);
@@ -85,8 +85,6 @@ package {
 				var readyTimer:Timer = new Timer(500);
 				readyTimer.addEventListener(TimerEvent.TIMER, updateTrackTime);
 				readyTimer.start();
-				
-				
 			}
 			
 			catch (err:Error) {
@@ -109,12 +107,10 @@ package {
 		}
 		
 		private function stop(playaName:String):Boolean {
+			ExternalInterface.call("Playa.get['"+playaName+"'].setPlayState(false)");
+			ExternalInterface.call("Playa.get['"+playaName+"'].setPlayhead(0)");
 			if(playaName == currentPlayaName){
-				ExternalInterface.call("Playa.get['"+currentPlayaName+"'].setPlayState(false)");
-				ExternalInterface.call("Playa.get['"+currentPlayaName+"'].setPlayhead(0)");
 				channel.stop();
-				playaName = "";
-				currentTrackUrl= "";
 				return(true);
 			}else{
 				return(false);

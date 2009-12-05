@@ -67,15 +67,19 @@ var Playa =
 
             return(item);
           },
-          play: function(url){
+          play: function(url, time){
             if(!url)
               url = this.currentTrackUrl();
+            
+            if(!time)
+              time = this.playhead
 
             if(this.playing == false){
               this.setCurrentTrack()
-              if(this.app.play(this.name, url, this.playhead)==true)
+              if(this.app.play(this.name, url, time)==true){
                 this.doOnPlay();
                 this.startDoingWhilePlaying();
+              }
             }
           },
           pause: function(){
@@ -85,11 +89,11 @@ var Playa =
             }
           },
           stop: function(){
-            if(this.playing==true && this.app.stop(this.name)==true){
+            if(this.app.stop(this.name)==true){
               this.setPlayhead(0);
-              this.doOnStop();
               this.stopDoingWhilePlaying();
             }
+            this.doOnStop();
           },
           playIntervalId: '',
           playheadUpdater: function(){
@@ -98,10 +102,17 @@ var Playa =
           },
           doOnPlay: function(){},
           doOnPause: function(){},
-          doOnStop: function(){},
+          doOnStop: function(){
+            this.updateDisplay("0/"+(this.trackTime/1000).toFixed(0));
+          },
           doOnPlayNext: function(){},
           doOnPlayPrevious: function(){},
-          doWhilePlaying: function(){},
+          doWhilePlaying: function(){
+            var playheadDisplay = (this.playhead/1000)
+            playheadDisplay = playheadDisplay.toFixed(0)
+            playheadDisplay = playheadDisplay +"/"+(this.trackTime/1000).toFixed(0);
+            this.updateDisplay(playheadDisplay); 
+          },
           startDoingWhilePlaying: function(){
             this.playIntervalId = setInterval(this.playheadUpdater, 50);
           },
@@ -135,10 +146,7 @@ var Playa =
     add: function(name, instance) { this.get[name] = instance; },
     get: {},
     current: {},
-    setCurrent: function(name){ this.current = this.get[name]; },
-    callback: function(name, callback, funct){
-      this.get[name][callback] = funct;
-    }
+    setCurrent: function(name){ this.current = this.get[name]; }
   };
 
 $(document).ready(function(){
