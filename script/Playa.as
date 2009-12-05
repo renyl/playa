@@ -8,10 +8,13 @@ package {
 	import flash.utils.Timer;
 	
 	public class Playa extends Sprite {
+		private var currentSound:Sound;
 		private var channel:SoundChannel;
 		private var currentTrackUrl:String;
 		private var currentPlayaName:String;
-		private var currentTrackTotalTime:Number;
+		
+		
+		
 		
 		public function Playa() {			
 			if (ExternalInterface.available) {
@@ -21,7 +24,7 @@ package {
 					ExternalInterface.addCallback("pause", pause);
 					ExternalInterface.addCallback("stop", stop);
 					ExternalInterface.addCallback("playheadPosition", playheadPosition);
-					ExternalInterface.addCallback("totalTrackTime", totalTrackTime);
+		
 					
 					if (checkJavaScriptReady()) {
 						trace("JavaScript is ready.");
@@ -53,49 +56,73 @@ package {
 		private function playheadPosition():Number{
 			return(channel.position);
 		}
-		private function totalTrackTime():Number{
-			return(currentTrackTotalTime);
-		}
 		
-		private function play(playaName:String, address:String, position:Number=0):void {
+		private function soundCompleteHandler(event:Event):void {
+			ExternalInterface.call("Playa.get['"+currentPlayaName+"'].playNext()");
+		}
+		private function updateTrackTime(timer:Timer):void{
+			ExternalInterface.call("alert", "come. on.");
+			var duration:Number = (currentSound.bytesTotal / (currentSound.bytesLoaded / currentSound.length)) / 1000;
+			ExternalInterface.call("Playa.get['"+currentPlayaName+"'].setTrackTime("+currentSound.length+")");
+			
+			if(currentSound.bytesTotal-currentSound.bytesLoaded<500){
+				timer.stop();
+				timer.removeEventListener(TimerEvent.TIMER, updateTrackTime);
+			}
+		}
+		private function play(playaName:String, address:String, position:Number=0):Boolean {
 			stopIfNewPlaya(playaName);
 			var req:URLRequest = new URLRequest(address);
 			var sound:Sound = new Sound();
 			try {
-				sound.load(req);				
+				sound.load(req);	
+				
 				channel = sound.play(position);
-				ExternalInterface.call("Playa.get['"+playaName+"'].setPlayState(true)");
-				ExternalInterface.call("Playa.get['"+playaName+"'].setPlayHead(0)");
-				currentTrackTotalTime = sound.length;
+				
 				currentPlayaName = playaName;
 				currentTrackUrl  = address;
+				currentSound     = sound;
+				ExternalInterface.call("Playa.get['"+playaName+"'].setPlayState(true)");
+				ExternalInterface.call("Playa.get['"+playaName+"'].setPlayhead(0)");
+				
+				ExternalInterface.call("Playa.setCurrent('"+playaName+"')");
+				
+				var readyTimer:Timer = new Timer(100, 0);
+				readyTimer.addEventListener(TimerEvent.TIMER, updateTrackTime);
+				readyTimer.start();
+				
+				
 			}
+			
 			catch (err:Error) {
 				trace(err.message);
 			}
 			
 			channel.addEventListener(Event.SOUND_COMPLETE, soundCompleteHandler);
+			return(true);
 		}
 		
-		private function soundCompleteHandler(event:Event):void {
-			ExternalInterface.call("Playa.get['"+currentPlayaName+"'].playNext()");
-		}
-		
-		private function pause(playaName:String, force:Boolean=false):void {
+		private function pause(playaName:String, force:Boolean=false):Boolean {
 			if(playaName == currentPlayaName || force==true){
 				ExternalInterface.call("Playa.get['"+playaName+"'].setPlayState(false)");
-				ExternalInterface.call("Playa.get['"+playaName+"'].setPlayHead("+channel.position+")");
+				ExternalInterface.call("Playa.get['"+playaName+"'].setPlayhead("+channel.position+")");
 				channel.stop();
+				return(true);
+			}else{
+				return(false);
 			}
 		}
 		
-		private function stop(playaName:String):void {
+		private function stop(playaName:String):Boolean {
 			if(playaName == currentPlayaName){
 				ExternalInterface.call("Playa.get['"+currentPlayaName+"'].setPlayState(false)");
-				ExternalInterface.call("Playa.get['"+currentPlayaName+"'].setPlayHead(0)");
+				ExternalInterface.call("Playa.get['"+currentPlayaName+"'].setPlayhead(0)");
 				channel.stop();
 				playaName = "";
 				currentTrackUrl= "";
+				return(true);
+			}else{
+				return(false);
 			}
 		}
 		

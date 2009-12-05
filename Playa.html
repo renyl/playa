@@ -41,6 +41,13 @@
       
       #license{ font-size:10px; width:200px;}
     </style>
+    <script type="text/javascript">
+    	$(document).ready(function(){                                                      
+        Playa.get["first_instance"]["doWhilePlaying"] = function(){                      
+          this.updateDisplay(this.playhead+"/"+this.trackTime);                                    
+        }; 
+      }); 
+    </script>
   </head>
   <body>
     <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
@@ -58,6 +65,7 @@
  
     <div class="playa" id="first_instance">
       <ul>
+      	<div class="display"></div>
         <li>
           <span class="play">play</span> | <span class="pause">pause</span> | <span class="stop">stop</span>
         </li>

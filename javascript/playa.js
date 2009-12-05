@@ -7,11 +7,14 @@ var Playa =
           playlist:{},
           currentTrack: 0,
           totalTracks: 0,
-          playHead: 0,
+          playhead: 0,
           playing: false,
           id3Info: {},
+          trackTime: 0,
+          setTrackTime: function(time) { alert(time); this.trackTime = time; },
           setPlayState: function(state){ this.playing = state; },
-          setPlayHead: function(time){ this.playHead = time; },
+          setPlayhead: function(time){ this.playhead = time; },
+          updatePlayhead: function() { this.setPlayhead(this.app.playheadPosition()); },
           setCurrentTrack: function(track){
             if(!track)
               track = this.currentTrack;
@@ -27,7 +30,7 @@ var Playa =
             })
           },
           gotoNext: function(){
-            this.setPlayHead(0)
+            this.setPlayhead(0)
 
             if(this.currentTrack != this.totalTracks-1)
               this.setCurrentTrack(this.currentTrack += 1);
@@ -35,7 +38,7 @@ var Playa =
             return(this.currentTrack);
           },
           gotoPrevious: function(){
-            this.setPlayHead(0)
+            this.setPlayhead(0)
 
             if(this.currentTrack != 0)
               this.setCurrentTrack(this.currentTrack -= 1);
@@ -44,15 +47,17 @@ var Playa =
           },
           playNext: function(){
             this.stop();
-
-            if(this.currentTrack != this.gotoNext())
+            if(this.currentTrack != this.gotoNext()){
               this.play(); 
+              this.doOnPlayNext();
+            }
           },
           playPrevious: function(){
             this.stop();
-
-            if(this.currentTrack != this.gotoPrevious())
+            if(this.currentTrack != this.gotoPrevious()){
                this.play(); 
+               this.doOnPlayPrevious();
+            }
           },
           currentTrackUrl: function(){
             var item = this.playlist[this.currentTrack];
@@ -68,11 +73,45 @@ var Playa =
 
             if(this.playing == false){
               this.setCurrentTrack()
-              this.app.play(this.name, url, this.playHead);
+              if(this.app.play(this.name, url, this.playhead)==true)
+                this.doOnPlay();
+                this.startDoingWhilePlaying();
             }
           },
-          pause: function(){ this.app.pause(this.name); },
-          stop: function(){ this.app.stop(this.name); },
+          pause: function(){
+            if(this.playing==true && this.app.pause(this.name)==true){
+              this.doOnPause();
+              this.stopDoingWhilePlaying();
+            }
+          },
+          stop: function(){
+            if(this.playing==true && this.app.stop(this.name)==true){
+              this.setPlayhead(0);
+              this.doOnStop();
+              this.stopDoingWhilePlaying();
+            }
+          },
+          playIntervalId: '',
+          playheadUpdater: function(){
+            Playa.current.updatePlayhead();
+            Playa.current.doWhilePlaying();
+          },
+          doOnPlay: function(){},
+          doOnPause: function(){},
+          doOnStop: function(){},
+          doOnPlayNext: function(){},
+          doOnPlayPrevious: function(){},
+          doWhilePlaying: function(){},
+          startDoingWhilePlaying: function(){
+            this.playIntervalId = setInterval(this.playheadUpdater, 50);
+          },
+          stopDoingWhilePlaying: function(){ clearInterval(this.playIntervalId); },
+          updateDisplay: function(text){
+            $("#"+this.name +" .display").each(function(i){
+              $(this).text(text);
+            })
+          }
+
         };
       instance.name = name;
       return(instance);
@@ -94,7 +133,12 @@ var Playa =
 
     countTracks: function(playlist){ return(playlist.length) },
     add: function(name, instance) { this.get[name] = instance; },
-    get: {}
+    get: {},
+    current: {},
+    setCurrent: function(name){ this.current = this.get[name]; },
+    callback: function(name, callback, funct){
+      this.get[name][callback] = funct;
+    }
   };
 
 $(document).ready(function(){
@@ -128,6 +172,9 @@ $(document).ready(function(){
       }else{
         playa = Playa.setup(element.id, this.value);
       }
+    });
+    $(this).find(".display").each(function(){
+      playa["display"] = this;
     });
     $(this).find(".play").each(function(){
       $(this).bind("click", function(e){
