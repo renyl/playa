@@ -11,7 +11,7 @@ var Playa =
           playing: false,
           id3Info: {},
           trackTime: 0,
-          setTrackTime: function(time) { alert(time); this.trackTime = time; },
+          setTrackTime: function(time) { this.trackTime = time; },
           setPlayState: function(state){ this.playing = state; },
           setPlayhead: function(time){ this.playhead = time; },
           updatePlayhead: function() { this.setPlayhead(this.app.playheadPosition()); },

@@ -60,16 +60,12 @@ package {
 		private function soundCompleteHandler(event:Event):void {
 			ExternalInterface.call("Playa.get['"+currentPlayaName+"'].playNext()");
 		}
-		private function updateTrackTime(timer:Timer):void{
-			ExternalInterface.call("alert", "come. on.");
-			var duration:Number = (currentSound.bytesTotal / (currentSound.bytesLoaded / currentSound.length)) / 1000;
+		
+		private function updateTrackTime(timer:TimerEvent):void{
+			var duration:Number = (currentSound.bytesTotal / (currentSound.bytesLoaded / currentSound.length));
 			ExternalInterface.call("Playa.get['"+currentPlayaName+"'].setTrackTime("+currentSound.length+")");
-			
-			if(currentSound.bytesTotal-currentSound.bytesLoaded<500){
-				timer.stop();
-				timer.removeEventListener(TimerEvent.TIMER, updateTrackTime);
-			}
 		}
+		
 		private function play(playaName:String, address:String, position:Number=0):Boolean {
 			stopIfNewPlaya(playaName);
 			var req:URLRequest = new URLRequest(address);
@@ -84,10 +80,9 @@ package {
 				currentSound     = sound;
 				ExternalInterface.call("Playa.get['"+playaName+"'].setPlayState(true)");
 				ExternalInterface.call("Playa.get['"+playaName+"'].setPlayhead(0)");
-				
 				ExternalInterface.call("Playa.setCurrent('"+playaName+"')");
 				
-				var readyTimer:Timer = new Timer(100, 0);
+				var readyTimer:Timer = new Timer(500);
 				readyTimer.addEventListener(TimerEvent.TIMER, updateTrackTime);
 				readyTimer.start();
 				

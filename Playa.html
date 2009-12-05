@@ -44,7 +44,10 @@
     <script type="text/javascript">
     	$(document).ready(function(){                                                      
         Playa.get["first_instance"]["doWhilePlaying"] = function(){                      
-          this.updateDisplay(this.playhead+"/"+this.trackTime);                                    
+          this.updateDisplay((this.playhead/1000).toFixed(0)+"/"+(this.trackTime/1000).toFixed(0));                                    
+        };
+        Playa.get["first_instance"]["doOnStop"] = function(){                      
+          this.updateDisplay("0/"+(this.trackTime/1000).toFixed(0));                                    
         }; 
       }); 
     </script>
