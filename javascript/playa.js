@@ -54,7 +54,7 @@ var Playa =
           },
           playPrevious: function(){
             this.stop();
-            if(this.currentTrack != this.gotoPrevious()){
+            if(this.currentTrac != this.gotoPrevious()){
                this.play(); 
                this.doOnPlayPrevious();
             }
@@ -90,7 +90,6 @@ var Playa =
           },
           stop: function(){
             if(this.app.stop(this.name)==true){
-              this.setPlayhead(0);
               this.stopDoingWhilePlaying();
             }
             this.doOnStop();
@@ -114,10 +113,18 @@ var Playa =
             this.updateDisplay(playheadDisplay); 
           },
           startDoingWhilePlaying: function(){
-            this.playIntervalId = setInterval(this.playheadUpdater, 50);
+            this.playIntervalId = setInterval(this.playheadUpdater, 100);
           },
-          stopDoingWhilePlaying: function(){ clearInterval(this.playIntervalId); },
+          stopDoingWhilePlaying: function(){
+            clearInterval(this.playIntervalId);
+          },
           updateDisplay: function(text){
+            // need a method that sets and uses a default display line
+            // something that would easily give a desirable output
+            // would be nice if the display element could be moved to 
+            // the active track
+
+            // which, of course, it can.
             $("#"+this.name +" .display").each(function(i){
               $(this).text(text);
             })

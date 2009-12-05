@@ -12,6 +12,7 @@ package {
 		private var channel:SoundChannel;
 		private var currentTrackUrl:String;
 		private var currentPlayaName:String;
+		private var trackTimer:Timer = new Timer(500);
 		
 		public function Playa() {			
 			if (ExternalInterface.available) {
@@ -27,7 +28,7 @@ package {
 						trace("JavaScript is ready.");
 					} else {
 						trace("JavaScript is not ready, creating timer.");
-						var readyTimer:Timer = new Timer(100, 0);
+						var readyTimer:Timer = new Timer(500);					
 						readyTimer.addEventListener(TimerEvent.TIMER, timerHandler);
 						readyTimer.start();
 					}
@@ -44,26 +45,25 @@ package {
 		}
 		
 		private function stopIfNewPlaya(playaName:String):void {
-			// this should really be called "stopIfNewPlaya",
-			// and it should call pause from the external interface
-			// so the doOnPause() callback will fire
 			try{
 			  if(playaName != currentPlayaName)
-				  pause(currentPlayaName, true);
+				  ExternalInterface.call("Playa.current.pause()");
 			} catch(error:Error) {}
 		}
 		
-		private function playheadPosition():Number{
-			return(channel.position);
+		private function playheadPosition(num:Number=-1):Number{
+			if(num == -1){
+			num = channel.position; }
+			return(num);
 		}
 		
 		private function soundCompleteHandler(event:Event):void {
-			ExternalInterface.call("Playa.get['"+currentPlayaName+"'].playNext()");
+			ExternalInterface.call("Playa.current.playNext()");
 		}
 		
 		private function updateTrackTime(timer:TimerEvent):void{
 			var duration:Number = (currentSound.bytesTotal / (currentSound.bytesLoaded / currentSound.length));
-			ExternalInterface.call("Playa.get['"+currentPlayaName+"'].setTrackTime("+currentSound.length+")");
+			ExternalInterface.call("Playa.current.setTrackTime("+currentSound.length+")");
 		}
 		
 		private function play(playaName:String, address:String, position:Number=0):Boolean {
@@ -82,9 +82,9 @@ package {
 				ExternalInterface.call("Playa.get['"+playaName+"'].setPlayhead(0)");
 				ExternalInterface.call("Playa.setCurrent('"+playaName+"')");
 				
-				var readyTimer:Timer = new Timer(500);
-				readyTimer.addEventListener(TimerEvent.TIMER, updateTrackTime);
-				readyTimer.start();
+				
+				trackTimer.addEventListener(TimerEvent.TIMER, updateTrackTime);
+				trackTimer.start();
 			}
 			
 			catch (err:Error) {
@@ -110,6 +110,9 @@ package {
 			ExternalInterface.call("Playa.get['"+playaName+"'].setPlayState(false)");
 			ExternalInterface.call("Playa.get['"+playaName+"'].setPlayhead(0)");
 			if(playaName == currentPlayaName){
+				trackTimer.stop();
+				trackTimer.removeEventListener(TimerEvent.TIMER, updateTrackTime);
+				
 				channel.stop();
 				return(true);
 			}else{
