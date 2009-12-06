@@ -1,3 +1,18 @@
+     /* Playa written by Evan Short 2009 */
+
+/* available at http://github.com/whtevn/playa */
+
+/* distributed under the mit standard license  */
+
+/************ Sharing is caring ****************/
+//                                             //
+// if you have changes to make to this project //
+//    fork it on github,                       //
+//        and the whole world will love you    //
+//                            forever and ever.//
+//                                             //
+/***********************************************/
+
 var Playa =
   {
     init: function(name){
