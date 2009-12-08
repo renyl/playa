@@ -130,7 +130,7 @@ var Playa =
           },
           doOnPlayNext: function(){},
           doOnPlayPrevious: function(){},
-          doOnActivateTrack: function(element, active){};
+          doOnActivateTrack: function(element, active){},
           doWhilePlaying: function(){
             var playheadDisplay = (this.playhead/1000)
             playheadDisplay = playheadDisplay.toFixed(0)
