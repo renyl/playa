@@ -20,7 +20,7 @@ go into a hosted directory (e.g. ~/Sites on a mac)
 and then direct your browser to the resulting folder
 
 or just go check out what that is going to look like
-[here](http://newqdev.com/Playa/Playa.html)
+[here](http://newqdev.com/playa/Playa.html)
 
 I am aware that the visuals on that example are not particularly impressive. 
 I am not aiming to prove that css works with html. It does. I promise.
