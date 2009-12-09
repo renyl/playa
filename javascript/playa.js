@@ -43,7 +43,7 @@ var Playa =
               }else{
                 $(this).removeClass("active");
               }
-              play.doOnActivateTrack(this, active_track);
+              playa.doOnActivateTrack(this, active_track);
             })
           },
           gotoNext: function(){
