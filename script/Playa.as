@@ -53,7 +53,7 @@ package {
 		
 		private function playheadPosition(num:Number=-1):Number{
 			if(num == -1){
-			num = channel.position; }
+			num = channel.position/1000; }
 			return(num);
 		}
 		
@@ -63,17 +63,18 @@ package {
 		
 		private function updateTrackTime(timer:TimerEvent):void{
 			var duration:Number = (currentSound.bytesTotal / (currentSound.bytesLoaded / currentSound.length));
-			ExternalInterface.call("Playa.current.setTrackTime("+currentSound.length+")");
+			ExternalInterface.call("Playa.current.setTrackTime("+duration/1000+")");
 		}
 		
 		private function play(playaName:String, address:String, position:Number=0):Boolean {
+			
 			stopIfNewPlaya(playaName);
 			var req:URLRequest = new URLRequest(address);
 			var sound:Sound = new Sound();
 			try {
 				sound.load(req);	
 				
-				channel = sound.play(position);
+				channel = sound.play(position*1000);
 				
 				currentPlayaName = playaName;
 				currentTrackUrl  = address;
@@ -98,7 +99,7 @@ package {
 		private function pause(playaName:String, force:Boolean=false):Boolean {
 			if(playaName == currentPlayaName || force==true){
 				ExternalInterface.call("Playa.get['"+playaName+"'].setPlayState(false)");
-				ExternalInterface.call("Playa.get['"+playaName+"'].setPlayhead("+channel.position+")");
+				ExternalInterface.call("Playa.get['"+playaName+"'].setPlayhead("+channel.position/1000+")");
 				channel.stop();
 				return(true);
 			}else{
