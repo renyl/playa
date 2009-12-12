@@ -33,23 +33,25 @@ var Playa =
           id3Info: {},
           trackTime: 0,
           setTrackTime: function(time) {
-            if(time.toFixed(0) != NaN)
+            if(time.toFixed(0) != NaN){
               this.trackTime = time.toFixed(0);
+            }
           },
           setPlayState: function(state){ this.playing = state; },
           setPlayhead: function(time){ this.playhead = time.toFixed(0); },
           updatePlayhead: function() { this.setPlayhead(this.app.playheadPosition()); },
           setCurrentTrack: function(track){
-            if(!track)
+            if(!track){
               track = this.currentTrack;
+            }
 
             try {
-              this.trackTime = this.playlist[this.currentTrack].tracktime
+              this.trackTime = this.playlist[this.currentTrack].tracktime;
             } catch(err) { }
             this.executeCallback("activateTrack");
           },
           gotoNext: function(){
-            this.setPlayhead(0)
+            this.setPlayhead(0);
 
             if(this.currentTrack != this.totalTracks-1){ 
               this.setCurrentTrack(this.currentTrack += 1);
@@ -59,7 +61,7 @@ var Playa =
             return(this.currentTrack);
           },
           gotoPrevious: function(){
-            this.setPlayhead(0)
+            this.setPlayhead(0);
 
             if(this.currentTrack != 0){
               this.setCurrentTrack(this.currentTrack -= 1);
@@ -85,17 +87,20 @@ var Playa =
           currentTrackUrl: function(){
             var item = this.playlist[this.currentTrack];
 
-            if(typeof item != 'string')
-              { item = item.url };
+            if(typeof item != 'string'){
+              item = item.url;
+            }
 
             return(item);
           },
           play: function(url, time){
-            if(!url)
+            if(!url){
               url = this.currentTrackUrl();
+           }
             
-            if(!time)
-              time = this.playhead
+            if(!time){
+              time = this.playhead;
+            }
 
             if(this.playing == false){
               if(this.app.play(this.name, url, time)==true){
@@ -131,14 +136,13 @@ var Playa =
           },
           doOn: Playa.callbackDefault,
           executeCallback: function(name, playa){
-            if(!playa)
+            if(!playa){
               playa = this;
+            }
 
             try {
               this.doOn[name](playa);
-            } catch(err){
-              try {
-                Playa.callbackDefault[name](playa);
+            } catch(err){ try { Playa.callbackDefault[name](playa);
               } catch(err){ }
             }
           },
