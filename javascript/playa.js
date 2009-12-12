@@ -35,7 +35,7 @@ var Playa =
           setTrackTime: function(time) {
             time =time.toFixed(0) 
             if(time != NaN && time > this.trackTime){
-              this.trackTime = time.toFixed(0);
+              this['trackTime'] = parseInt(time).toFixed(0);
             }
           },
           setPlayState: function(state){ this.playing = state; },
@@ -46,9 +46,11 @@ var Playa =
               track = this.currentTrack;
             }
 
-            try {
+            if(this.playlist[this.currentTrack].tracktime){
               this.trackTime = this.playlist[this.currentTrack].tracktime;
-            } catch(err) { }
+            }else{
+              this.trackTime = 0;
+            }
             this.executeCallback("activateTrack");
           },
           gotoNext: function(){
@@ -205,18 +207,20 @@ $(document).ready(function(){
     var element = this;
     var playa; 
     $(this).find(".playlist").each(function(){
-      if(!this.value){
+      if(this.value){
+        playa = Playa.setup(element.id, this.value);
+      }else{
         var playlist = []
         $(this).find(".track").each(function(i){
           var href;
           var time;
-          if(!this.href){
+          if(this.href){
+            href = this.href;
+          }else{
             $(this).find("a").each(function(i){
               if(i==0)
                 href = this.href
             });
-          }else{
-            href = this.href;
           }
 
           $(this).find(".tracktime").each(function(){
@@ -227,7 +231,6 @@ $(document).ready(function(){
               time = parseInt(time[0])*60 + parseInt(time[1])
             }
           });
-          if(!time){ time = 0}
           playlist.push({url: href, tracktime: time})
         });
         playa = Playa.setup(element.id, playlist);
@@ -239,8 +242,6 @@ $(document).ready(function(){
               e.preventDefault()
             });
         });
-      }else{
-        playa = Playa.setup(element.id, this.value);
       }
     });
     $(this).find(".play").each(function(){
