@@ -1,10 +1,26 @@
 Playa.callbackDefault = {
   stop: function(playa){
-    playa.doOn.updatePlayhead(playa);
+    this.updatePlayhead(playa);
   },
   activateTrack: function(playa){
-    playa.doOn.updatePlayhead(playa);
-
+    this.updatePlayhead(playa);
+    this.updateCSS(playa)
+  },
+  playing: function(playa){
+    this.updatePlayhead(playa); 
+  },
+  updatePlayhead: function(playa){
+    var playheadDisplay = "track #"+(playa.currentTrack+1)+": "
+    if(playa.trackTime){
+      playheadDisplay += playa.playhead+"/"+ playa.trackTime;
+    }else{
+      playheadDisplay += "0/0"
+    }
+    $("#"+playa.name +" .display").each(function(i){
+      $(this).text(playheadDisplay);
+    })
+  },
+  updateCSS: function(playa){
     $("#"+playa.name +" .track").each(function(i){
       if(i == playa.currentTrack){
         $(this).addClass("active");
@@ -12,18 +28,6 @@ Playa.callbackDefault = {
         $(this).removeClass("active");
       }
     });
-  },
-  playing: function(playa){
-    playa.doOn.updatePlayhead(playa); 
-  },
-  updatePlayhead: function(playa){
-    if(playa.trackTime){
-      var playheadDisplay = (playa.playhead);
-      playheadDisplay = playheadDisplay +"/"+ playa.trackTime;
-      $("#"+playa.name +" .display").each(function(i){
-        $(this).text(playheadDisplay);
-      })
-    }
-  },
+  }
 };
 
