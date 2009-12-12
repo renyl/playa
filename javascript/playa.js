@@ -137,7 +137,9 @@ var Playa =
             try {
               this.doOn[name](playa);
             } catch(err){
-              Playa.callbackDefault[name](playa);
+              try {
+                Playa.callbackDefault[name](playa);
+              } catch(err){ }
             }
           },
           startDoingWhilePlaying: function(){
