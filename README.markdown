@@ -184,6 +184,8 @@ callbacks are available for the following events:
 - doOnPlay
 - doOnPause
 - doOnStop
+- doOnGotoNext
+- doOnGotoPrevious
 - doOnPlayNext
 - doOnPlayPrevious
 - doOnActivateTrack

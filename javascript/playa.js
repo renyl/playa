@@ -1,10 +1,12 @@
-     /* Playa written by Evan Short 2009 */
+
+    /* Playa written by Evan Short 2009  *
+     *          ,,,=^_^=,,,              */
 
 /* available at http://github.com/whtevn/playa */
 
 /* distributed under the mit standard license  */
 
-/************ Sharing is caring ****************/
+/************ Sharing is Caring ****************/
 //                                             //
 // if you have changes to make to this project //
 //    fork it on github,                       //
@@ -13,6 +15,10 @@
 //                                             //
 /***********************************************/
 
+
+// really need to get together an api reference
+// and a changelog
+// yuck.
 var Playa =
   {
     init: function(name){
@@ -26,39 +32,39 @@ var Playa =
           playing: false,
           id3Info: {},
           trackTime: 0,
-          setTrackTime: function(time) { this.trackTime = time; },
+          setTrackTime: function(time) {
+            if(time.toFixed(0) != NaN)
+              this.trackTime = time.toFixed(0);
+          },
           setPlayState: function(state){ this.playing = state; },
-          setPlayhead: function(time){ this.playhead = time; },
+          setPlayhead: function(time){ this.playhead = time.toFixed(0); },
           updatePlayhead: function() { this.setPlayhead(this.app.playheadPosition()); },
           setCurrentTrack: function(track){
             if(!track)
               track = this.currentTrack;
 
-            var playa = this;
-            this.currentTrack = track;
-            $("#"+this.name +" .track").each(function(i){
-              var active_track = (i == playa.currentTrack)
-              if(active_track){
-                $(this).addClass("active");
-              }else{
-                $(this).removeClass("active");
-              }
-              playa.doOnActivateTrack(this, active_track);
-            })
+            try {
+              this.trackTime = this.playlist[this.currentTrack].tracktime
+            } catch(err) { }
+            this.executeCallback("activateTrack");
           },
           gotoNext: function(){
             this.setPlayhead(0)
 
-            if(this.currentTrack != this.totalTracks-1)
+            if(this.currentTrack != this.totalTracks-1){ 
               this.setCurrentTrack(this.currentTrack += 1);
+              this.executeCallback("gotoNext");
+            }
 
             return(this.currentTrack);
           },
           gotoPrevious: function(){
             this.setPlayhead(0)
 
-            if(this.currentTrack != 0)
+            if(this.currentTrack != 0){
               this.setCurrentTrack(this.currentTrack -= 1);
+              this.executeCallback("gotoPrevious");
+            }
 
             return(this.currentTrack);
           },
@@ -66,14 +72,14 @@ var Playa =
             this.stop();
             if(this.currentTrack != this.gotoNext()){
               this.play(); 
-              this.doOnPlayNext();
+              this.executeCallback("playNext");
             }
           },
           playPrevious: function(){
             this.stop();
             if(this.currentTrac != this.gotoPrevious()){
                this.play(); 
-               this.doOnPlayPrevious();
+               this.executeCallback("playPrevious");
             }
           },
           currentTrackUrl: function(){
@@ -92,16 +98,15 @@ var Playa =
               time = this.playhead
 
             if(this.playing == false){
-              this.setCurrentTrack()
               if(this.app.play(this.name, url, time)==true){
-                this.doOnPlay();
+                this.executeCallback("play");
                 this.startDoingWhilePlaying();
               }
             }
           },
           pause: function(){
             if(this.playing==true && this.app.pause(this.name)==true){
-              this.doOnPause();
+              this.executeCallback("pause");
               this.stopDoingWhilePlaying();
             }
           },
@@ -109,7 +114,8 @@ var Playa =
             if(this.app.stop(this.name)==true){
               this.stopDoingWhilePlaying();
             }
-            this.doOnStop();
+
+            this.executeCallback("stop");
           },
           playIntervalId: '',
           playheadUpdater: function(){
@@ -120,22 +126,19 @@ var Playa =
              * functions have to be called this way. 
              * very dissapointing, indeed.
              */
-            Playa.current.updatePlayhead();
-            Playa.current.doWhilePlaying();
+            Playa.current.updatePlayhead(Playa.current);
+            Playa.current.executeCallback("playing", Playa.current);
           },
-          doOnPlay: function(){},
-          doOnPause: function(){},
-          doOnStop: function(){
-            this.updateDisplay("0/"+(this.trackTime/1000).toFixed(0));
-          },
-          doOnPlayNext: function(){},
-          doOnPlayPrevious: function(){},
-          doOnActivateTrack: function(element, active){},
-          doWhilePlaying: function(){
-            var playheadDisplay = (this.playhead/1000)
-            playheadDisplay = playheadDisplay.toFixed(0)
-            playheadDisplay = playheadDisplay +"/"+(this.trackTime/1000).toFixed(0);
-            this.updateDisplay(playheadDisplay); 
+          doOn: Playa.callbackDefault,
+          executeCallback: function(name, playa){
+            if(!playa)
+              playa = this;
+
+            try {
+              this.doOn[name](playa);
+            } catch(err){
+              Playa.callbackDefault[name](playa);
+            }
           },
           startDoingWhilePlaying: function(){
             this.playIntervalId = setInterval(this.playheadUpdater, 100);
@@ -143,11 +146,6 @@ var Playa =
           stopDoingWhilePlaying: function(){
             clearInterval(this.playIntervalId);
           },
-          updateDisplay: function(text){
-            $("#"+this.name +" .display").each(function(i){
-              $(this).text(text);
-            })
-          }
 
         };
       instance.name = name;
@@ -155,12 +153,25 @@ var Playa =
     },
 
     setup: function(name, playlist) {             
-      if(typeof playlist == "string")
+      if(typeof playlist == "string"){
         playlist = eval('('+playlist+')');
+      }
+
+      // need to go through the playlist
+      // and make a track instance for each member
+      // and then store it in the playlist as a track
+
+      // need to pull all track logic out of here
+      // and put it in there
 
       instance = Playa.init(name);
       instance.playlist = playlist;
+
+      // this should be a method that actually returns
+      // the length of the playlist
       instance.totalTracks = Playa.countTracks(playlist);
+
+
       instance.setCurrentTrack(0);
       instance['app'] = FlashInterface.get('Playa');
       Playa.add(name, instance);
@@ -172,8 +183,15 @@ var Playa =
     add: function(name, instance) { this.get[name] = instance; },
     get: {},
     current: {},
-    setCurrent: function(name){ this.current = this.get[name]; }
+    setCurrent: function(name){ this.current = this.get[name]; },
+    callbackDefault: {}
   };
+
+
+// this needs to be extracted into something worthwhile
+// like a module with functions to get what is needed
+
+// i think this is what is meant as "self-documenting code"
 
 $(document).ready(function(){
   $(".playa").each(function(i){
@@ -183,7 +201,8 @@ $(document).ready(function(){
       if(!this.value){
         var playlist = []
         $(this).find(".track").each(function(i){
-          var href 
+          var href;
+          var time;
           if(!this.href){
             $(this).find("a").each(function(i){
               if(i==0)
@@ -192,7 +211,12 @@ $(document).ready(function(){
           }else{
             href = this.href;
           }
-          playlist.push(href)
+
+          $(this).find(".tracktime").each(function(){
+            time = parseInt(this.value);
+          });
+          if(!time){ time = 0}
+          playlist.push({url: href, tracktime: time})
         });
         playa = Playa.setup(element.id, playlist);
           $(this).find(".track").each(function(i){
@@ -206,9 +230,6 @@ $(document).ready(function(){
       }else{
         playa = Playa.setup(element.id, this.value);
       }
-    });
-    $(this).find(".display").each(function(){
-      playa["display"] = this;
     });
     $(this).find(".play").each(function(){
       $(this).bind("click", function(e){
