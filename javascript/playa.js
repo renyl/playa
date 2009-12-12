@@ -33,7 +33,8 @@ var Playa =
           id3Info: {},
           trackTime: 0,
           setTrackTime: function(time) {
-            if(time.toFixed(0) != NaN){
+            time =time.toFixed(0) 
+            if(time != NaN && time > this.trackTime){
               this.trackTime = time.toFixed(0);
             }
           },
