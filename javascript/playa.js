@@ -219,7 +219,12 @@ $(document).ready(function(){
           }
 
           $(this).find(".tracktime").each(function(){
-            time = parseInt(this.value);
+            if(this.value){
+              time = parseInt(this.value);
+            }else{
+              time = $(this).text().split(":");
+              time = parseInt(time[0])*60 + parseInt(time[1])
+            }
           });
           if(!time){ time = 0}
           playlist.push({url: href, tracktime: time})
