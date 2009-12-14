@@ -26,100 +26,63 @@ var Playa =
         {
           name: "",
           playlist:{},
-          currentTrack: 0,
-          totalTracks: 0,
-          playhead: 0,
+          currentTrackNumber: 0,
           playing: false,
-          id3Info: {},
-          trackTime: 0,
-          setTrackTime: function(time) {
-            time =time.toFixed(0) 
-            if(time != NaN && time > this.trackTime){
-              this['trackTime'] = parseInt(time).toFixed(0);
-            }
-          },
+          currentTrack: function(){ return(this.playlist[this.currentTrackNumber]); },
+          totalTracks: function(){ return(this.playlist.length - 1); },
           setPlayState: function(state){ this.playing = state; },
-          setPlayhead: function(time){ this.playhead = time.toFixed(0); },
-          updatePlayhead: function() { this.setPlayhead(this.app.playheadPosition()); },
-          setCurrentTrack: function(track){
-            if(!track){
-              track = this.currentTrack;
-            }
-
-            if(this.playlist[this.currentTrack].tracktime){
-              this.trackTime = this.playlist[this.currentTrack].tracktime;
-            }else{
-              this.trackTime = 0;
-            }
-            this.executeCallback("activateTrack");
-          },
           gotoNext: function(){
-            this.setPlayhead(0);
-
-            if(this.currentTrack != this.totalTracks-1){ 
-              this.setCurrentTrack(this.currentTrack += 1);
+            if(this.currentTrackNumber != this.totalTracks()){ 
+              this.currentTrackNumber += 1;
               this.executeCallback("gotoNext");
+              this.executeCallback("activateTrack");
             }
 
-            return(this.currentTrack);
+            return(this.currentTrackNumber);
           },
           gotoPrevious: function(){
-            this.setPlayhead(0);
-
-            if(this.currentTrack != 0){
-              this.setCurrentTrack(this.currentTrack -= 1);
+            if(this.currentTrackNumber != 0){
+              this.currentTrackNumber -= 1;
               this.executeCallback("gotoPrevious");
+              this.executeCallback("activateTrack");
             }
 
-            return(this.currentTrack);
+            return(this.currentTrackNumber);
           },
           playNext: function(){
             this.stop();
-            if(this.currentTrack != this.gotoNext()){
+            if(this.currentTrackNumber != this.gotoNext()){
               this.play(); 
               this.executeCallback("playNext");
             }
           },
           playPrevious: function(){
             this.stop();
-            if(this.currentTrac != this.gotoPrevious()){
+            if(this.currentTrackNumber != this.gotoPrevious()){
                this.play(); 
                this.executeCallback("playPrevious");
             }
           },
-          currentTrackUrl: function(){
-            var item = this.playlist[this.currentTrack];
-
-            if(typeof item != 'string'){
-              item = item.url;
-            }
-
-            return(item);
-          },
-          play: function(url, time){
-            if(!url){
-              url = this.currentTrackUrl();
+          play: function(track, time){
+            if(!track){
+              track = this.currentTrack();
            }
-            
-            if(!time){
-              time = this.playhead;
-            }
 
             if(this.playing == false){
-              if(this.app.play(this.name, url, time)==true){
+              if(Playa.app().play(this.name, track.url, track.time)==true){
                 this.executeCallback("play");
                 this.startDoingWhilePlaying();
               }
             }
           },
           pause: function(){
-            if(this.playing==true && this.app.pause(this.name)==true){
+            if(this.playing==true && Playa.app().pause(this.name)==true){
               this.executeCallback("pause");
               this.stopDoingWhilePlaying();
             }
           },
           stop: function(){
-            if(this.app.stop(this.name)==true){
+            if(Playa.app().stop(this.name)==true){
               this.stopDoingWhilePlaying();
             }
 
@@ -134,7 +97,7 @@ var Playa =
              * functions have to be called this way. 
              * very dissapointing, indeed.
              */
-            Playa.current.updatePlayhead(Playa.current);
+            Playa.current.currentTrack().updatePlayhead(Playa.current);
             Playa.current.executeCallback("playing", Playa.current);
           },
           doOn: Playa.callbackDefault,
@@ -163,36 +126,27 @@ var Playa =
 
     setup: function(name, playlist) {             
       if(typeof playlist == "string"){
-        playlist = eval('('+playlist+')');
+        var finalList = []
+        playlist = eval('('+playlist+')')
+        for(track in playlist){
+          finalList.push(Track.init(playlist[track]))
+        };
+        playlist = finalList;
       }
-
-      // need to go through the playlist
-      // and make a track instance for each member
-      // and then store it in the playlist as a track
-
-      // need to pull all track logic out of here
-      // and put it in there
 
       instance = Playa.init(name);
       instance.playlist = playlist;
-
-      // this should be a method that actually returns
-      // the length of the playlist
-      instance.totalTracks = Playa.countTracks(playlist);
-
-
-      instance.setCurrentTrack(0);
-      instance['app'] = FlashInterface.get('Playa');
+      instance.executeCallback("activateTrack");
       Playa.add(name, instance);
 
       return(instance)
     },
 
-    countTracks: function(playlist){ return(playlist.length) },
     add: function(name, instance) { this.get[name] = instance; },
     get: {},
     current: {},
     setCurrent: function(name){ this.current = this.get[name]; },
+    app: function(){FlashInterface.get('Playa')},
     callbackDefault: {}
   };
 
@@ -231,13 +185,13 @@ $(document).ready(function(){
               time = parseInt(time[0])*60 + parseInt(time[1])
             }
           });
-          playlist.push({url: href, tracktime: time})
+          playlist.push(Track.init({url: href, tracktime: time}))
         });
         playa = Playa.setup(element.id, playlist);
           $(this).find(".track").each(function(i){
             $(this).bind("click", function(e){
               playa.stop();
-              playa.currentTrack = i;
+              playa.currentTrackNumber = i;
               playa.play(this.href);
               e.preventDefault()
             });

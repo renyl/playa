@@ -10,7 +10,7 @@ Playa.callbackDefault = {
     this.updatePlayhead(playa); 
   },
   updatePlayhead: function(playa){
-    var playheadDisplay = "track #"+(playa.currentTrack+1)+": "
+    var playheadDisplay = "track #"+(playa.currentTrackNumber+1)+": "
     if(playa.trackTime){
       playheadDisplay += playa.playhead+"/"+ playa.trackTime;
     }else{
@@ -22,7 +22,7 @@ Playa.callbackDefault = {
   },
   updateCSS: function(playa){
     $("#"+playa.name +" .track").each(function(i){
-      if(i == playa.currentTrack){
+      if(i == playa.currentTrack()){
         $(this).addClass("active");
       }else{
         $(this).removeClass("active");
