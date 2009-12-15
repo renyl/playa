@@ -1,0 +1,69 @@
+var Streamer = FlashInterface.get('Playa')
+
+var Track =
+  {
+    url: '',
+    time: 0,
+    playhead: 0,
+    timeEstablished: false,
+    setPlayhead: function(time) { this.playhead = time; },
+    setTime: function(time) { this.time = time; },
+    establishTime: function(time) { this.setTime(time); this.timeEstablished = true;}
+  };
+
+var Playlist = 
+  {
+    tracks: [],
+    onTrackNumber: 0,
+    totalTracks: function(){ return(this.tracks.length-1); },
+    nextTrack: function(){ this.gotoTrack(this.onTrackNumber - 1); },
+    previousTrack: function(){ this.gotoTrack(this.onTrackNumber + 1); },
+    gotoTrack: function(number){
+      number = parseInt(number);
+      if(number < 0){
+        this.onTrackNumber = 0;
+      }elseif(number > this.totalTracks()){
+        this.onTrackNumber = this.totalTracks();
+      }else{
+        this.onTrackNumber = number;
+      }
+    },
+    currentTrack: function(){ this.tracks[this.onTrackNumber] }
+  };
+
+var Playa = 
+  {
+    name: '',
+    state: '',
+    playlist: {},
+    play: function(){
+      Playa.pauseOtherPlayas(this.name);
+      Streamer.play(this.playlist.currentTrack().url);
+      this.state = "playing"
+    },
+    pause: function(){
+      Streamer.pause(this.name);
+      this.state = "paused"
+    },
+    stop: function(){
+      Streamer.stop(this.name);
+      this.playlist.currentTrack().setPlayhead(0);
+      this.state = "stopped"
+    },
+    gotoNext: function(){
+      var stateWas = this.state;
+      this.stop();
+      this.playlist.nextTrack();
+      if(stateWas == "playing"){
+        this.play();
+      }
+    },
+    gotoPrevious: function(){
+      var stateWas = this.state;
+      this.stop();
+      this.playlist.previousTrack();
+      if(stateWas == "playing"){
+        this.play();
+      }
+    }
+  };
