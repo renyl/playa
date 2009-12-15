@@ -22,22 +22,22 @@ var Playa =
         {
           name: '',
           state: '',
-          playlist: {},
+          playlist: [],
           play: function(){
-            track = this.playlist.currentTrack()
-            Playa.app().play(track.url, track.playhead, track.timeEstablished);
+            var track = this.playlist.currentTrack()
+            this.app.play(track.url, track.playhead, track.timeEstablished);
             this.state = "playing"
           },
           pause: function(){
             if(this.state == "playing"){
-              Playa.app().pause(this.name);
+              this.app.pause(this.name);
               this.state = "paused"
             }
           },
           stop: function(){
             this.playlist.currentTrack().setPlayhead(0);
             if(this.state != "stopped"){
-              Playa.app().stop(this.name);
+              this.app.stop(this.name);
               this.state = "stopped"
             }
           },
@@ -77,6 +77,9 @@ var Playa =
       setup: function(name, playlist) {             
         instance = Playa.init(name);
         instance.playlist = playlist;
+        instance['app'] = FlashInterface.get('Playa2');
+        alert(instance.app);
+
         //instance.executeCallback("activateTrack");
         Playa.add(name, instance);
 
@@ -85,5 +88,4 @@ var Playa =
 
       add: function(name, instance) { this.get[name] = instance; },
       get: {},
-      app: function(){FlashInterface.get('Playa')}
     }

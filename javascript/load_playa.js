@@ -1,5 +1,4 @@
 $(document).ready(function(){
-
   $(".playa").each(function(i){
     var element = this;
     var playa; 
