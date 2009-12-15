@@ -29,13 +29,15 @@ var Track =
     },
 
     initWithHTML: function(element){
+      var instance;
       if(element.href){
-        instance = Track.init(element.href);
+        instance = Track.init({url: element.href});
       }else{
         $(element).find("a").each(function(i){
-          instance = Track.init(this.href);
+          instance = Track.init({url: this.href});
         });
       }
+
 
       $(element).find(".tracktime").each(function(){
         if(this.value){

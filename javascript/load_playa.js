@@ -8,6 +8,7 @@ $(document).ready(function(){
       }else{
         playa = Playa.setup(element.id, Playlist.initWithHTML(this));
       }
+
       $(this).find(".track").each(function(i){
         $(this).bind("click", function(e){
           playa.stop();

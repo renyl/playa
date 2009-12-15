@@ -18,7 +18,7 @@ var Playlist =
             this.onTrackNumber = number;
           }
         },
-        currentTrack: function(){ this.tracks[this.onTrackNumber] }
+        currentTrack: function(){ return(this.tracks[this.onTrackNumber]) }
       };
 
       return(instance)

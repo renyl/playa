@@ -78,7 +78,6 @@ var Playa =
         instance = Playa.init(name);
         instance.playlist = playlist;
         instance['app'] = FlashInterface.get('Playa2');
-        alert(instance.app);
 
         //instance.executeCallback("activateTrack");
         Playa.add(name, instance);
