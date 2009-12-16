@@ -44,14 +44,13 @@ package
 			var duration:Number = (sound.bytesTotal / (sound.bytesLoaded / sound.length));
 			ExternalInterface.call("Playa.current.setTrackTime("+duration/1000+")");
 		}
-		private function play(address:String, timeEstablished:Boolean, position:Number):void {
+		
+		private function play(address:String, position:Number, timeEstablished:Boolean):void {
 			var req:URLRequest = new URLRequest(address);
 			var newSound:Sound = new Sound();
 			ExternalInterface.call("Playa.pauseAll()");
 			
 			try {
-				
-				
 				sound = newSound;
 				sound.load(req);
 				channel = sound.play(position*1000);

@@ -26,6 +26,7 @@ var Playa =
           play: function(){
             if(this.state != "playing"){
               var track = this.playlist.currentTrack()
+              Playa.startDoingWhilePlaying(this.name)
               this.app.play(track.url, track.playhead, track.timeEstablished);
               this.state = "playing"
             }
@@ -40,6 +41,7 @@ var Playa =
             this.playlist.currentTrack().setPlayhead(0);
             if(this.state != "stopped"){
               this.app.stop();
+              Playa.stopDoingWhilePlaying();
               this.state = "stopped"
             }
           },
@@ -47,7 +49,6 @@ var Playa =
             var stateWas = this.state;
             this.stop();
             this.playlist.nextTrack();
-            alert(this.playlist.onTrackNumber);
             if(stateWas == "playing"){
               this.play();
             }
@@ -60,17 +61,6 @@ var Playa =
               this.play();
             }
           },
-          playIntervalId: '',
-          startDoingWhilePlaying: function(){
-            this.playIntervalId = setInterval(this.playheadUpdater, 100);
-          },
-          stopDoingWhilePlaying: function(){
-            clearInterval(this.playIntervalId);
-          },
-          playheadUpdater: function(){
-            Playa.current.currentTrack().updatePlayhead(Playa.current);
-            Playa.current.executeCallback("playing", Playa.current);
-          },
           callbacks: Playa.callbackDefault
         };
 
@@ -78,8 +68,9 @@ var Playa =
       },
 
       setup: function(name, playlist) {             
-        instance = Playa.init(name);
+        instance = Playa.init();
         instance.playlist = playlist;
+        instance.name = name;
         instance['app'] = FlashInterface.get('Playa2');
 
         //instance.executeCallback("activateTrack");
@@ -94,5 +85,19 @@ var Playa =
         for(playa in this.get){
           this.get[playa].pause();
         }
+      },
+      playIntervalId: '',
+      current: '',
+      startDoingWhilePlaying: function(name){
+        this.current = name
+        this.playIntervalId = setInterval(this.playheadUpdater, 100);
+      },
+      stopDoingWhilePlaying: function(){
+        this.current = ''
+        clearInterval(this.playIntervalId);
+      },
+      playheadUpdater: function(){
+        currentPlaya = Playa.get[Playa.current] 
+        currentPlaya.playlist.currentTrack().setPlayhead(currentPlaya.app.playheadPosition());
       }
     }

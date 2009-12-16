@@ -8,7 +8,7 @@ var Track =
           time: 0,
           playhead: 0,
           timeEstablished: false,
-          setPlayhead: function(time) { this.playhead = time; },
+          setPlayhead: function(time) {time=parseInt(time); this.playhead = time; },
           establishTime: function(time) {
             this.time = time;
             this.timeEstablished = true;
