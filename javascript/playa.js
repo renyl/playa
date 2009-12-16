@@ -42,7 +42,9 @@ var Playa =
           setPlayhead: function(time){ this.playhead = time.toFixed(0); },
           updatePlayhead: function() { this.setPlayhead(this.app.playheadPosition()); },
           setCurrentTrack: function(track){
-            if(!track){
+            if(track || track==0){
+              this.currentTrack = track
+            }else{
               track = this.currentTrack;
             }
 
@@ -237,8 +239,8 @@ $(document).ready(function(){
           $(this).find(".track").each(function(i){
             $(this).bind("click", function(e){
               playa.stop();
-              playa.currentTrack = i;
-              playa.play(this.href);
+              playa.setCurrentTrack(i);
+              playa.play();
               e.preventDefault()
             });
         });
