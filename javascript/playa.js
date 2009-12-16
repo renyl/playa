@@ -26,14 +26,12 @@ var Playa =
           play: function(){
             if(this.state != "playing"){
               var track = this.playlist.currentTrack()
-              alert(track.playhead);
               this.app.play(track.url, track.playhead, track.timeEstablished);
               this.state = "playing"
             }
           },
           pause: function(){
             if(this.state == "playing"){
-              alert(this.playlist.currentTrack().playhead);
               this.app.stop();
               this.state = "paused"
             }
@@ -49,6 +47,7 @@ var Playa =
             var stateWas = this.state;
             this.stop();
             this.playlist.nextTrack();
+            alert(this.playlist.onTrackNumber);
             if(stateWas == "playing"){
               this.play();
             }
@@ -91,4 +90,9 @@ var Playa =
 
       add: function(name, instance) { this.get[name] = instance; },
       get: {},
+      pauseAll: function(){
+        for(playa in this.get){
+          this.get[playa].pause();
+        }
+      }
     }

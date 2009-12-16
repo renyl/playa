@@ -18,11 +18,11 @@ var Track =
         instance.url = args.url;
 
         if(args.time){
-          instance.establishTime(time) = args.time
+          instance.establishTime(args.time);
         }
 
         if(args.playhead){
-          instance.playhead = args.playhead
+          instance.playhead = args.playhead;
         }
 
         return(instance)
