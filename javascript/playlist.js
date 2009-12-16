@@ -6,8 +6,8 @@ var Playlist =
         tracks: [],
         onTrackNumber: 0,
         totalTracks: function(){ return(this.tracks.length-1); },
-        nextTrack: function(){ this.gotoTrack(this.onTrackNumber - 1); },
-        previousTrack: function(){ this.gotoTrack(this.onTrackNumber + 1); },
+        nextTrack: function(){ this.gotoTrack(this.onTrackNumber + 1); },
+        previousTrack: function(){ this.gotoTrack(this.onTrackNumber - 1); },
         gotoTrack: function(number){
           number = parseInt(number);
           if(number < 0){

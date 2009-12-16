@@ -25,10 +25,10 @@ var Playa =
           playlist: [],
           play: function(){
             if(this.state != "playing"){
-              var track = this.playlist.currentTrack()
-              Playa.startDoingWhilePlaying(this.name)
-              this.app.play(track.url, track.playhead, track.timeEstablished);
+              var track  = this.playlist.currentTrack()
               this.state = "playing"
+              this.app.play(track.url, track.playhead, track.timeEstablished);
+              Playa.startDoingWhilePlaying(this.name)
             }
           },
           pause: function(){
@@ -41,25 +41,27 @@ var Playa =
             this.playlist.currentTrack().setPlayhead(0);
             if(this.state != "stopped"){
               this.app.stop();
-              Playa.stopDoingWhilePlaying();
               this.state = "stopped"
+              Playa.stopDoingWhilePlaying();
             }
           },
           gotoNext: function(){
             var stateWas = this.state;
-            this.stop();
             this.playlist.nextTrack();
             if(stateWas == "playing"){
+              this.stop();
               this.play();
             }
           },
           gotoPrevious: function(){
             var stateWas = this.state;
-            this.stop();
             this.playlist.previousTrack();
             if(stateWas == "playing"){
+              this.stop();
               this.play();
             }
+          },
+          continueState: function(){
           },
           callbacks: Playa.callbackDefault
         };
@@ -87,17 +89,19 @@ var Playa =
         }
       },
       playIntervalId: '',
-      current: '',
+      currentName: '',
+      current: function(){ return(this.get[this.currentName]) },
       startDoingWhilePlaying: function(name){
-        this.current = name
+        this.currentName = name
         this.playIntervalId = setInterval(this.playheadUpdater, 100);
       },
       stopDoingWhilePlaying: function(){
-        this.current = ''
+        this.currentName = ''
         clearInterval(this.playIntervalId);
       },
       playheadUpdater: function(){
-        currentPlaya = Playa.get[Playa.current] 
-        currentPlaya.playlist.currentTrack().setPlayhead(currentPlaya.app.playheadPosition());
+        if(Playa.current()){
+          Playa.current().playlist.currentTrack().setPlayhead(Playa.current().app.playheadPosition());
+        }
       }
     }

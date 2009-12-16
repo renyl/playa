@@ -40,21 +40,13 @@ $(document).ready(function(){
 
     $(this).find(".next").each(function(){
       $(this).bind("click", function(e){
-        if(playa.playing==true){
-          playa.playNext(); 
-        }else{
-          playa.gotoNext();
-        }
+        playa.gotoNext();
       });
     });
 
     $(this).find(".previous").each(function(){
       $(this).bind("click", function(e){
-        if(playa.playing==true){
-          playa.playPrevious(); 
-        }else{
-          playa.gotoPrevious();
-        }
+        playa.gotoPrevious();
       });
     });
   });
