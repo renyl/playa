@@ -24,20 +24,24 @@ var Playa =
           state: '',
           playlist: [],
           play: function(){
-            var track = this.playlist.currentTrack()
-            this.app.play(track.url, track.playhead, track.timeEstablished);
-            this.state = "playing"
+            if(this.state != "playing"){
+              var track = this.playlist.currentTrack()
+              alert(track.playhead);
+              this.app.play(track.url, track.playhead, track.timeEstablished);
+              this.state = "playing"
+            }
           },
           pause: function(){
             if(this.state == "playing"){
-              this.app.pause(this.name);
+              alert(this.playlist.currentTrack().playhead);
+              this.app.stop();
               this.state = "paused"
             }
           },
           stop: function(){
             this.playlist.currentTrack().setPlayhead(0);
             if(this.state != "stopped"){
-              this.app.stop(this.name);
+              this.app.stop();
               this.state = "stopped"
             }
           },
