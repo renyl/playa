@@ -10,19 +10,18 @@ Playa.callbackDefault = {
     this.updatePlayhead(playa); 
   },
   updatePlayhead: function(playa){
-    var playheadDisplay = "track #"+(playa.currentTrackNumber+1)+": "
-    if(playa.trackTime){
-      playheadDisplay += playa.playhead+"/"+ playa.trackTime;
-    }else{
-      playheadDisplay += "0/0"
-    }
+    var playheadDisplay = "track #"+(playa.playlist.humanTrackNumber())+": ";
+    var track = playa.playlist.currentTrack();
+
+    playheadDisplay += track.playhead+"/"+ track.time;
+
     $("#"+playa.name +" .display").each(function(i){
       $(this).text(playheadDisplay);
     })
   },
   updateCSS: function(playa){
     $("#"+playa.name +" .track").each(function(i){
-      if(i == playa.currentTrack()){
+      if(playa.playlist.onTrack(i)==true){
         $(this).addClass("active");
       }else{
         $(this).removeClass("active");

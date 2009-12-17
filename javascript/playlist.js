@@ -5,6 +5,8 @@ var Playlist =
       {
         tracks: [],
         onTrackNumber: 0,
+        humanTrackNumber: function(){return(this.onTrackNumber +1)},
+        onTrack: function(number){ return(parseInt(number) == this.onTrackNumber) },
         totalTracks: function(){ return(this.tracks.length-1); },
         nextTrack: function(){ this.gotoTrack(this.onTrackNumber + 1); },
         previousTrack: function(){ this.gotoTrack(this.onTrackNumber - 1); },

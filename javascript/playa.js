@@ -28,6 +28,7 @@ var Playa =
               var track  = this.playlist.currentTrack()
               this.app.play(track.url, track.playhead, track.timeEstablished);
               this.state = "playing"
+              this.executeCallback("play")
               Playa.startDoingWhilePlaying(this.name)
             }
           },
@@ -42,6 +43,7 @@ var Playa =
             if(this.state != "stopped"){
               this.app.stop();
               this.state = "stopped"
+              this.executeCallback("stop")
               Playa.stopDoingWhilePlaying();
             }
           },
@@ -52,6 +54,7 @@ var Playa =
               this.stop();
               this.play();
             }
+            this.executeCallback("activateTrack");
           },
           gotoPrevious: function(){
             var stateWas = this.state;
@@ -60,15 +63,27 @@ var Playa =
               this.stop();
               this.play();
             }
+            this.executeCallback("activateTrack");
           },
           trackFinished: function(){
             if(this.playlist.onLastTrack() == true){
-              this.callback.onPlaylistEnd()
+              this.executeCallback("onPlaylistEnd")
             }else{
-              this.callback.onTrackEnd()
+              this.executeCallback("onTrackEnd")
+            }
+          },
+          callback: Playa.callbackDefault,
+          executeCallback: function(name, playa){
+            if(!playa){ playa = this; }
+
+            try {
+              this.callback[name](playa);
+            } catch(err){
+              try {
+                Playa.callbackDefault[name](playa);
+              } catch(err){ }
             }
           }
-          callback: Playa.callbackDefault
         };
 
         return(instance);
@@ -79,8 +94,8 @@ var Playa =
         instance.playlist = playlist;
         instance.name = name;
         instance['app'] = FlashInterface.get('Playa2');
+        instance.executeCallback("activateTrack");
 
-        //instance.executeCallback("activateTrack");
         Playa.add(name, instance);
 
         return(instance)
