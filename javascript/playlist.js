@@ -38,7 +38,15 @@ var Playlist =
       return(instance);
     },
 
-    initWithJSON: function(){
+    initWithJSON: function(info){
+      var instance = Playlist.init();
+      
+      info = eval("("+info+")"); 
+      for(i in info){
+        instance.tracks.push(Track.initWithObjectLiteral(info[i]));
+      }
+
+      return(instance);
     }
 
   }

@@ -10,8 +10,13 @@ var Track =
           timeEstablished: false,
           setPlayhead: function(time) {time=parseInt(time); this.playhead = time; },
           establishTime: function(time) {
-            this.time = time;
+            this.time = parseInt(time);
             this.timeEstablished = true;
+          },
+          setTrackTime: function(time){
+            if(this.timeEstablished == false){
+              this.time = parseInt(time);
+            }
           }
         };
 
@@ -50,6 +55,14 @@ var Track =
       });
       instance = Track.init(args)
       return(instance);
+    },
+
+    initWithObjectLiteral: function(ol){
+      if(typeof ol == "string"){
+        ol = {url: ol}
+      }
+
+      return(Track.init(ol));
     }
   }
 

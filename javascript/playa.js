@@ -76,6 +76,9 @@ var Playa =
               this.executeCallback("onTrackEnd")
             }
           },
+          setTrackTime: function(time){
+            this.playlist.currentTrack().setTrackTime(time)
+          },
           callback: Playa.callbackDefault,
           executeCallback: function(name, playa){
             if(!playa){ playa = this; }
@@ -126,5 +129,5 @@ var Playa =
       playheadUpdater: function(){
         Playa.current.playlist.currentTrack().setPlayhead(Playa.current.app.playheadPosition());
         Playa.current.executeCallback("playing", Playa.current);
-      }
+      },
     }
