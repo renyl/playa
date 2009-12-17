@@ -26,8 +26,8 @@ var Playa =
           play: function(){
             if(this.state != "playing"){
               var track  = this.playlist.currentTrack()
-              this.state = "playing"
               this.app.play(track.url, track.playhead, track.timeEstablished);
+              this.state = "playing"
               Playa.startDoingWhilePlaying(this.name)
             }
           },
@@ -61,9 +61,14 @@ var Playa =
               this.play();
             }
           },
-          continueState: function(){
-          },
-          callbacks: Playa.callbackDefault
+          trackFinished: function(){
+            if(this.playlist.onLastTrack() == true){
+              this.callback.onPlaylistEnd()
+            }else{
+              this.callback.onTrackEnd()
+            }
+          }
+          callback: Playa.callbackDefault
         };
 
         return(instance);
@@ -89,19 +94,16 @@ var Playa =
         }
       },
       playIntervalId: '',
-      currentName: '',
-      current: function(){ return(this.get[this.currentName]) },
+      setCurrent: function(name){ this.current = this.get[name] },
+      current: {},
       startDoingWhilePlaying: function(name){
-        this.currentName = name
+        this.setCurrent(name)
         this.playIntervalId = setInterval(this.playheadUpdater, 100);
       },
       stopDoingWhilePlaying: function(){
-        this.currentName = ''
         clearInterval(this.playIntervalId);
       },
       playheadUpdater: function(){
-        if(Playa.current()){
-          Playa.current().playlist.currentTrack().setPlayhead(Playa.current().app.playheadPosition());
-        }
+        Playa.current.playlist.currentTrack().setPlayhead(Playa.current.app.playheadPosition());
       }
     }

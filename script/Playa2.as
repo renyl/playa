@@ -32,12 +32,13 @@ package
 		}
 		private function playheadPosition(num:Number=-1):Number{
 			if(num == -1){
-				num = channel.position/1000; }
+				num = channel.position/1000; 
+			}
 			return(num);
 		}
 		
 		private function soundCompleteHandler(event:Event):void {
-			ExternalInterface.call("Playa.current.playNext()");
+			ExternalInterface.call("Playa.current.trackFinished()");
 		}
 		
 		private function updateTrackTime(timer:TimerEvent):void{
@@ -48,6 +49,7 @@ package
 		private function play(address:String, position:Number, timeEstablished:Boolean):void {
 			var req:URLRequest = new URLRequest(address);
 			var newSound:Sound = new Sound();
+			
 			ExternalInterface.call("Playa.pauseAll()");
 			
 			try {
