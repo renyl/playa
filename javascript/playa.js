@@ -47,23 +47,27 @@ var Playa =
               Playa.stopDoingWhilePlaying();
             }
           },
-          gotoNext: function(){
+          gotoTrack: function(number){
             var stateWas = this.state;
-            this.playlist.nextTrack();
+            if(number || number == 0){
+              this.playlist.gotoTrack(number)  
+            }
             if(stateWas == "playing"){
               this.stop();
               this.play();
             }
             this.executeCallback("activateTrack");
           },
+          gotoNext: function(){
+            // need some way to say beforeGotoNext and
+            // if it returns false
+            // make these next two lines not execute
+            this.playlist.nextTrack()
+            this.gotoTrack();
+          },
           gotoPrevious: function(){
-            var stateWas = this.state;
-            this.playlist.previousTrack();
-            if(stateWas == "playing"){
-              this.stop();
-              this.play();
-            }
-            this.executeCallback("activateTrack");
+            this.playlist.previousTrack()
+            this.gotoTrack();
           },
           trackFinished: function(){
             if(this.playlist.onLastTrack() == true){
@@ -104,9 +108,10 @@ var Playa =
       add: function(name, instance) { this.get[name] = instance; },
       get: {},
       pauseAll: function(){
-        for(playa in this.get){
-          this.get[playa].pause();
-        }
+        for(playa in this.get){ this.get[playa].pause(); }
+      },
+      stopAll: function(){
+        for(playa in this.get){ this.get[playa].stop(); }
       },
       playIntervalId: '',
       setCurrent: function(name){ this.current = this.get[name] },
@@ -120,5 +125,6 @@ var Playa =
       },
       playheadUpdater: function(){
         Playa.current.playlist.currentTrack().setPlayhead(Playa.current.app.playheadPosition());
+        Playa.current.executeCallback("playing", Playa.current);
       }
     }

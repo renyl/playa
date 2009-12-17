@@ -11,6 +11,7 @@ var Playlist =
         nextTrack: function(){ this.gotoTrack(this.onTrackNumber + 1); },
         previousTrack: function(){ this.gotoTrack(this.onTrackNumber - 1); },
         gotoTrack: function(number){
+          this.currentTrack().setPlayhead(0);
           number = parseInt(number);
           if(number < 0){
             this.onTrackNumber = 0;

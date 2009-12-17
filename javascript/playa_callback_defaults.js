@@ -27,6 +27,8 @@ Playa.callbackDefault = {
         $(this).removeClass("active");
       }
     });
-  }
+  },
+  onTrackEnd:function(playa){ playa.gotoNext(); },
+  onPlaylistEnd: function(playa){ playa.stop(); }
 };
 

@@ -30,23 +30,25 @@ var Track =
 
     initWithHTML: function(element){
       var instance;
+      var args = {};
       if(element.href){
-        instance = Track.init({url: element.href});
+        args['url'] = element.href;
       }else{
         $(element).find("a").each(function(i){
-          instance = Track.init({url: this.href});
+          args['url'] = this.href;
         });
       }
 
 
       $(element).find(".tracktime").each(function(){
         if(this.value){
-          time = parseInt(this.value);
+          args['time'] = parseInt(this.value);
         }else{
-          time = $(this).text().split(":");
-          time = parseInt(time[0])*60 + parseInt(time[1]);
+          args['time'] = $(this).text().split(":");
+          args['time'] = parseInt(args['time'][0])*60 + parseInt(args['time'][1]);
         }
       });
+      instance = Track.init(args)
       return(instance);
     }
   }

@@ -10,11 +10,10 @@ $(document).ready(function(){
       }
 
       $(this).find(".track").each(function(i){
-        $(this).bind("click", function(e){
-          playa.stop();
-          playa.currentTrackNumber = i;
-          playa.play(this.href);
-          e.preventDefault()
+        $(this).bind("click", function(event){
+          playa.gotoTrack(i);
+          playa.play();
+          event.preventDefault()
         });
       });
     });
