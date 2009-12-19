@@ -14,7 +14,6 @@
 //                                             //
 /***********************************************/
 
-
 var Playa = 
   {
     init: function(args) {
@@ -36,6 +35,7 @@ var Playa =
             if(this.state == "playing"){
               this.app.stop();
               this.state = "paused"
+              Playa.stopDoingWhilePlaying();
             }
           },
           stop: function(){
