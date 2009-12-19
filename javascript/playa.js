@@ -40,19 +40,19 @@ var Playa =
           },
           stop: function(){
             this.playlist.currentTrack().setPlayhead(0);
-            if(this.state != "stopped"){
+            if(this.state == "playing"){
               this.app.stop();
+              Playa.stopDoingWhilePlaying();
+            }
+            if(this.state != "stopped"){
               this.state = "stopped"
               this.executeCallback("stop")
-              Playa.stopDoingWhilePlaying();
             }
           },
           gotoTrack: function(number){
             var stateWas = this.state;
-            if(number || number == 0){
-              this.playlist.gotoTrack(number)  
-            }
             this.stop();
+            if(number || number == 0){ this.playlist.gotoTrack(number)  }
             if(stateWas == "playing"){
               this.play();
             }

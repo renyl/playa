@@ -11,6 +11,7 @@ $(document).ready(function(){
 
       $(this).find(".track").each(function(i){
         $(this).bind("click", function(event){
+          playa.stop();
           playa.gotoTrack(i);
           playa.play();
           event.preventDefault()
