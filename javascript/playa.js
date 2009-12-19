@@ -52,8 +52,8 @@ var Playa =
             if(number || number == 0){
               this.playlist.gotoTrack(number)  
             }
+            this.stop();
             if(stateWas == "playing"){
-              this.stop();
               this.play();
             }
             this.executeCallback("activateTrack");
